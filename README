@@ -4,4 +4,4 @@ To get it, run "git clone https://github.com/andixlm/build_tools" in root of ROM
 
 resync.sh - reset all changes in ROM sources, sync and get prebuilts.
 patch.sh - patch ROM sources to make them work with S II Plus.
-build.sh - build ROM for S II Plus. It asks for cleaning of 'out' directory (make clean) and device (s2ve or s2vep), then build for chosen device. And it handles first argument (--s2ve or --s2vep). If it's used, then it'll build ROM for chosen device without cleaning.
+build.sh - build ROM for S II Plus. It asks for cleaning of 'out' directory (make clean) and device (s2ve or s2vep), then build for chosen device. And it handles first argument (--s2ve or --s2vep). If it's used, then it'll build ROM for chosen device without cleaning. To build boot image for device defined in first argument without the whole ROM building use second argument '--mb'.

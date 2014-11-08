@@ -17,13 +17,20 @@ elif [ "$1" = "--s2vep" ]; then
 	PASS=1
 	DEVICE=s2vep
 
-# no argument = ask for clean and device as usual
+# no first argument = ask for clean and device as usual
 elif [ "$1" = "" ]; then
 	echo -n "Make it clean? (y/N): "
 	read CLEAN
 	if [ "$CLEAN" = "y" ]; then
 		make clean
 	fi
+fi
+###
+
+### Handle second argument
+# --mb = make boot image without the whole ROM
+if [ "$2" = "--mb" ]; then
+	MB=1
 fi
 ###
 
@@ -37,5 +44,11 @@ while [ $PASS -eq "0" ]; do
 	fi
 done
 
-. build/envsetup.sh
-brunch "$DEVICE"
+if [ "$MB" = "" ]; then
+	. build/envsetup.sh
+	brunch "$DEVICE"
+elif [ "$MB" = "1" ]; then
+	. build/envsetup.sh
+	breakfast $DEVICE
+	mka bootimage
+fi
