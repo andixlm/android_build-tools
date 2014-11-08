@@ -28,9 +28,13 @@ fi
 ###
 
 ### Handle second argument
-# --mb = make boot image without the whole ROM
+# --mb = make boot image without the whole ROM building
 if [ "$2" = "--mb" ]; then
-	MB=1
+	SA=b
+
+# --mr = make recovery image without the whole ROM building
+elif [ "$2" = "--mr" ]; then
+	SA=r
 fi
 ###
 
@@ -44,11 +48,15 @@ while [ $PASS -eq "0" ]; do
 	fi
 done
 
-if [ "$MB" = "" ]; then
+if [ "$SA" = "" ]; then
 	. build/envsetup.sh
 	brunch "$DEVICE"
-elif [ "$MB" = "1" ]; then
+elif [ "$SA" = "b" ]; then
 	. build/envsetup.sh
 	breakfast $DEVICE
 	mka bootimage
+elif [ "$SA" = "r" ]; then
+	. build/envsetup.sh
+	breakfast $DEVICE
+	mka recoveryimage
 fi
