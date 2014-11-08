@@ -7,7 +7,8 @@ CURRENT_DIR="$PWD"
 PATCHES=('frameworks/native 		build_tools/patches/0001-Workaround-CAPRI_HWC-issues.patch'
 		 'external/chromium_org 	build_tools/patches/0002-web-browser-Disable-HW-rendering-for-S2Plus.patch'
 		 'frameworks/av 			build_tools/patches/0003-OMXCodec-Set-default-input-buffer-size-for-S2Plus.patch'
-		 'hardware/broadcom/libbt 	build_tools/patches/0004-Add-BT-Support-for-S2Plus.patch')
+		 'hardware/broadcom/libbt 	build_tools/patches/0004-Add-BT-Support-for-S2Plus.patch'
+		 'vendor/cm					build_tools/patches/0005-Remove-useless-packages.patch')
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
 do
