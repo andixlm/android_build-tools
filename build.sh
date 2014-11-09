@@ -41,8 +41,10 @@ elif [ '-n $1' -a "$2" = "--mr" ]; then
 	SA=r
 
 elif [ "$2" != "--mb" -o "$2" != "--mr" ]; then
-	echo 'Wrong second argument! Stopping.'
-	exit 1
+	if [ "$2" != "" ]; then
+		echo 'Wrong second argument! Stopping.'
+		exit 1
+	fi
 fi
 ###
 
