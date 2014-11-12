@@ -15,15 +15,15 @@ if [ -z $1 ]; then
 		make clean
 	fi
 
-# --s2ve = build for s2ve without cleaning
-elif [ "$1" = "--s2ve" ]; then
+# --i9105 = build for i9105 without cleaning
+elif [ "$1" = "--i9105" ]; then
 	PASS=1
-	DEVICE=s2ve
+	DEVICE=i9105
 
-# --s2vep = build for s2vep without cleaning
-elif [ "$1" = "--s2vep" ]; then
+# --i9105p = build for i9105p without cleaning
+elif [ "$1" = "--i9105p" ]; then
 	PASS=1
-	DEVICE=s2vep
+	DEVICE=i9105p
 
 else
 	echo 'Wrong first argument! Stopping.'
@@ -49,9 +49,9 @@ fi
 ###
 
 while [ $PASS -eq 0 ]; do
-	echo -n 'Device? (s2ve or s2vep): '
+	echo -n 'Device? (i9105 or i9105p): '
 	read DEVICE
-	if [ "$DEVICE" = "s2ve" ] || [ "$DEVICE" = "s2vep" ]; then 
+	if [ "$DEVICE" = "i9105" ] || [ "$DEVICE" = "i9105p" ]; then 
 		PASS=1
 	else
 		echo Wrong input! Try again.
