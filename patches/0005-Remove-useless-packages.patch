@@ -1,9 +1,9 @@
-From b2dae9a46b318ffa67c4ea45ba090ddfb97c4817 Mon Sep 17 00:00:00 2001
+From 71e35086e72b133de6ff8e209649410fc1ca3c25 Mon Sep 17 00:00:00 2001
 From: andixlm <andixev@gmail.com>
-Date: Sat, 8 Nov 2014 22:06:29 +0500
+Date: Tue, 25 Nov 2014 18:32:10 +0500
 Subject: [PATCH] Remove useless packages
 
-Change-Id: Ief5665b706fa645a59ba3a1b32329a7f6442a775
+Change-Id: I25db2ae257825f8930e8768e6c531c2ac1de309c
 ---
  config/common.mk      | 4 ----
  config/common_full.mk | 8 --------
@@ -36,7 +36,7 @@ index d32640c..726cd66 100644
      CMHome
  
 diff --git a/config/common_full.mk b/config/common_full.mk
-index e580b4c..eaea24b 100644
+index f5d97e3..0fe0228 100644
 --- a/config/common_full.mk
 +++ b/config/common_full.mk
 @@ -24,14 +24,6 @@ PRODUCT_PACKAGES += \
@@ -53,7 +53,7 @@ index e580b4c..eaea24b 100644
 -
  # Extra tools in CM
  PRODUCT_PACKAGES += \
-     vim
+     vim \
 -- 
 1.9.1
 
