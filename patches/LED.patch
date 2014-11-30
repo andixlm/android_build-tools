@@ -1,59 +1,59 @@
-From d2a5f93d1335b51de7d808852c253188772c385f Mon Sep 17 00:00:00 2001
+From a85be7ba1b57c954e0a0e73f35990e1f6ab3859d Mon Sep 17 00:00:00 2001
 From: andixlm <andixev@gmail.com>
-Date: Sun, 16 Nov 2014 00:47:38 +0500
+Date: Sat, 29 Nov 2014 15:36:20 +0500
 Subject: [PATCH] LED
 
-Change-Id: Id641a482f071a45c5234da6f53dc1715cdabb30e
+Change-Id: Iea18d975dbf7a22b08f5d41b8a0e3c7443ab385c
 ---
  .../com/android/server/input/InputManagerService.java |  4 ++++
  .../com/android/server/power/PowerManagerService.java | 19 ++++++++++++++-----
  2 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/services/java/com/android/server/input/InputManagerService.java b/services/java/com/android/server/input/InputManagerService.java
-index d2d312c..2d47b12 100644
---- a/services/java/com/android/server/input/InputManagerService.java
-+++ b/services/java/com/android/server/input/InputManagerService.java
-@@ -21,6 +21,7 @@ import com.android.internal.util.XmlUtils;
- import com.android.server.Watchdog;
- import com.android.server.display.DisplayManagerService;
- import com.android.server.display.DisplayViewport;
+diff --git a/services/core/java/com/android/server/input/InputManagerService.java b/services/core/java/com/android/server/input/InputManagerService.java
+index fc7f62c..87f4d99 100644
+--- a/services/core/java/com/android/server/input/InputManagerService.java
++++ b/services/core/java/com/android/server/input/InputManagerService.java
+@@ -21,6 +21,7 @@ import com.android.internal.R;
+ import com.android.internal.util.XmlUtils;
+ import com.android.server.DisplayThread;
+ import com.android.server.LocalServices;
 +import com.android.server.power.PowerManagerService;
+ import com.android.server.Watchdog;
  
  import org.xmlpull.v1.XmlPullParser;
- 
-@@ -1421,6 +1422,9 @@ public class InputManagerService extends IInputManager.Stub
+@@ -1507,6 +1508,9 @@ public class InputManagerService extends IInputManager.Stub
  
      // Native callback.
-     private int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags, boolean isScreenOn) {
+     private int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags) {
 +    if ((event.getScanCode() == 139 || event.getScanCode() == 158) && event.getAction() == 0) {
 +        PowerManagerService.ButtonsLightON();
 +    }
-         return mWindowManagerCallbacks.interceptKeyBeforeQueueing(
-                 event, policyFlags, isScreenOn);
+         return mWindowManagerCallbacks.interceptKeyBeforeQueueing(event, policyFlags);
      }
-diff --git a/services/java/com/android/server/power/PowerManagerService.java b/services/java/com/android/server/power/PowerManagerService.java
-index df235f5..7c9b2ed 100644
---- a/services/java/com/android/server/power/PowerManagerService.java
-+++ b/services/java/com/android/server/power/PowerManagerService.java
-@@ -181,6 +181,9 @@ public final class PowerManagerService extends IPowerManager.Stub
+ 
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index db494fe..4bc2f75 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -172,6 +172,9 @@ public final class PowerManagerService extends SystemService
  
      private static final float PROXIMITY_NEAR_THRESHOLD = 5.0f;
  
 +    private static long buttonNextTimeout = -1;
 +    private static int buttonBrightness = 0;
 +
-     private Context mContext;
-     private LightsService mLightsService;
-     private BatteryService mBatteryService;
-@@ -197,13 +200,13 @@ public final class PowerManagerService extends IPowerManager.Stub
-     private DreamManagerService mDreamManager;
-     private AutoBrightnessHandler mAutoBrightnessHandler;
-     private LightsService.Light mAttentionLight;
--    private LightsService.Light mButtonsLight;
-+    private static LightsService.Light mButtonsLight;
-     private LightsService.Light mKeyboardLight;
-     private LightsService.Light mCapsLight;
-     private LightsService.Light mFnLight;
+     private final Context mContext;
+     private final ServiceThread mHandlerThread;
+     private final PowerManagerHandler mHandler;
+@@ -187,13 +190,13 @@ public final class PowerManagerService extends SystemService
+     private SettingsObserver mSettingsObserver;
+     private DreamManagerInternal mDreamManager;
+     private Light mAttentionLight;
+-    private Light mButtonsLight;
++    private static Light mButtonsLight;
+     private Light mKeyboardLight;
+     private Light mCapsLight;
+     private Light mFnLight;
  
 -    private int mButtonTimeout;
 -    private int mButtonBrightness;
@@ -62,7 +62,7 @@ index df235f5..7c9b2ed 100644
      private int mButtonBrightnessSettingDefault;
      private int mKeyboardBrightness;
      private int mKeyboardBrightnessSettingDefault;
-@@ -1725,7 +1728,7 @@ public final class PowerManagerService extends IPowerManager.Stub
+@@ -1597,7 +1600,7 @@ public final class PowerManagerService extends SystemService
                      nextTimeout = mLastUserActivityTime
                              + screenOffTimeout - screenDimDuration;
                      if (now < nextTimeout) {
@@ -71,16 +71,16 @@ index df235f5..7c9b2ed 100644
                          if (mButtonBrightnessOverrideFromWindowManager >= 0) {
                              buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
                              keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
-@@ -1738,7 +1741,7 @@ public final class PowerManagerService extends IPowerManager.Stub
+@@ -1610,7 +1613,7 @@ public final class PowerManagerService extends SystemService
                          if (mButtonTimeout != 0 && now > mLastUserActivityTime + mButtonTimeout) {
-                             mButtonsLight.setBrightness(0);
+                              mButtonsLight.setBrightness(0);
                          } else {
 -                            mButtonsLight.setBrightness(buttonBrightness);
 +                            if (now > buttonNextTimeout) mButtonsLight.setBrightness(0);
                              if (buttonBrightness != 0 && mButtonTimeout != 0) {
                                  nextTimeout = now + mButtonTimeout;
                              }
-@@ -1782,6 +1785,12 @@ public final class PowerManagerService extends IPowerManager.Stub
+@@ -1669,6 +1672,12 @@ public final class PowerManagerService extends SystemService
          }
      }
  

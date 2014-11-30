@@ -5,12 +5,19 @@ cd ..
 COUNT=0
 CURRENT_DIR="$PWD"
 PATCHES=(
-'frameworks/native			build_tools/patches/0001-Workaround-CAPRI_HWC-issues.patch'
-'external/chromium_org		build_tools/patches/0002-web-browser-Disable-HW-rendering-for-S2Plus.patch'
-'frameworks/av				build_tools/patches/0003-OMXCodec-Set-default-input-buffer-size-for-S2Plus.patch'
-'hardware/broadcom/libbt	build_tools/patches/0004-Add-BT-Support-for-S2Plus.patch'
-'vendor/cm					build_tools/patches/0005-Remove-useless-packages.patch'
-'frameworks/base			build_tools/patches/0006-LED.patch'
+'build 							build_tools/patches/build.patch'
+'frameworks/av					build_tools/patches/frameworks_av.patch'
+'frameworks/base				build_tools/patches/frameworks_base.patch'
+'frameworks/native				build_tools/patches/frameworks_native.patch'
+'frameworks/opt/net/wifi		build_tools/patches/frameworks_opt_net_wifi.patch'
+'frameworks/opt/telephony		build_tools/patches/frameworks_opt_telephony.patch'
+'hardware/broadcom/libbt		build_tools/patches/hardware_broadcom_libbt.patch'
+'packages/apps/Settings			build_tools/patches/packages_apps_Settings.patch'
+'packages/services/Telephony	build_tools/patches/packages_services_Telephony.patch'
+'system/core					build_tools/patches/system_core.patch'
+'vendor/cm						build_tools/patches/vendor_cm.patch'
+
+'frameworks/base				build_tools/patches/LED.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
