@@ -16,8 +16,6 @@ PATCHES=(
 'packages/services/Telephony	build_tools/patches/packages_services_Telephony.patch'
 'system/core					build_tools/patches/system_core.patch'
 'vendor/cm						build_tools/patches/vendor_cm.patch'
-
-'frameworks/base				build_tools/patches/LED.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
