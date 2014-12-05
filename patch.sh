@@ -5,7 +5,6 @@ cd ..
 COUNT=0
 CURRENT_DIR="$PWD"
 PATCHES=(
-'build 							build_tools/patches/build.patch'
 'frameworks/av					build_tools/patches/frameworks_av.patch'
 'frameworks/base				build_tools/patches/frameworks_base.patch'
 'frameworks/native				build_tools/patches/frameworks_native.patch'
@@ -15,7 +14,6 @@ PATCHES=(
 'packages/apps/Settings			build_tools/patches/packages_apps_Settings.patch'
 'packages/services/Telephony	build_tools/patches/packages_services_Telephony.patch'
 'system/core					build_tools/patches/system_core.patch'
-'vendor/cm						build_tools/patches/vendor_cm.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
