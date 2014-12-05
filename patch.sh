@@ -11,7 +11,6 @@ PATCHES=(
 'frameworks/opt/net/wifi		build_tools/patches/frameworks_opt_net_wifi.patch'
 'frameworks/opt/telephony		build_tools/patches/frameworks_opt_telephony.patch'
 'hardware/broadcom/libbt		build_tools/patches/hardware_broadcom_libbt.patch'
-'packages/apps/Settings			build_tools/patches/packages_apps_Settings.patch'
 'packages/services/Telephony	build_tools/patches/packages_services_Telephony.patch'
 'system/core					build_tools/patches/system_core.patch'
 )
