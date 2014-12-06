@@ -1,4 +1,4 @@
-From 8ed85c8aea49095c2101dada364bb83c6bc01f9b Mon Sep 17 00:00:00 2001
+From 4fe51c1ad50ca29e06c27b7adf1b9a4582646aa8 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 14:47:35 +0700
 Subject: [PATCH 2/4] frameworks: base: add KEYCODE_HOME to wake keys
@@ -9,13 +9,13 @@ Change-Id: I77d70df2263dd9c75b02efde18d91585b1ad29f9
  1 file changed, 1 insertion(+)
 
 diff --git a/core/java/android/view/KeyEvent.java b/core/java/android/view/KeyEvent.java
-index 0701b53..f7939a9 100644
+index 788d23f..e2078d0 100644
 --- a/core/java/android/view/KeyEvent.java
 +++ b/core/java/android/view/KeyEvent.java
-@@ -1809,6 +1809,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
-             case KeyEvent.KEYCODE_SLEEP:
-             case KeyEvent.KEYCODE_WAKEUP:
-             case KeyEvent.KEYCODE_PAIRING:
+@@ -1812,6 +1812,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
+             case KeyEvent.KEYCODE_VOLUME_UP:
+             case KeyEvent.KEYCODE_VOLUME_DOWN:
+             case KeyEvent.KEYCODE_VOLUME_MUTE:
 +            case KeyEvent.KEYCODE_HOME:
                  return true;
          }
@@ -24,7 +24,7 @@ index 0701b53..f7939a9 100644
 1.9.3 (Apple Git-50)
 
 
-From cf4711c21ea4b0c9dd1e46c2add904fbf861beb1 Mon Sep 17 00:00:00 2001
+From d55519f5ced11bbf41c4d452c2fa0d77c06a5a5f Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 14:50:29 +0700
 Subject: [PATCH 3/4] TelephonyManager: set properties in Broadcom-style as
@@ -143,7 +143,7 @@ index 12b65f1..32508ff 100644
 1.9.3 (Apple Git-50)
 
 
-From 3088c2d6218f51e1e22b80daa1cf4b78407da243 Mon Sep 17 00:00:00 2001
+From b9d6a9787d454776195ccb3b770534b088f29f2f Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 22:33:16 +0700
 Subject: [PATCH 4/4] Camera: HACK: i9082: API hacks

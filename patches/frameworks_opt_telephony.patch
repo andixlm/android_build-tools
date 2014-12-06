@@ -1,4 +1,4 @@
-From 50cad05e56935bcdf7ba2357a7d054a5053bb2c3 Mon Sep 17 00:00:00 2001
+From cf44099c23015eeab923c894162e0c06d5efcb52 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 31 May 2014 12:34:56 +0700
 Subject: [PATCH 2/3] telephony: support for RIL that does not send
@@ -68,7 +68,7 @@ index a021997..67053bd 100644
 1.9.3 (Apple Git-50)
 
 
-From c70bea301e20bb5afa2b21774962186504b8492f Mon Sep 17 00:00:00 2001
+From 98809301e576e64ba73133ba8611295540d53983 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 17:39:50 +0700
 Subject: [PATCH 3/3] telephony: RIL: i9082: set correct rild names
