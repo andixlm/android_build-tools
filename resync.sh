@@ -2,9 +2,14 @@
 
 cd ..
 
-# Reset changes and sync
+# Reset changes
+# Use -o for resetting changes only.
 repo forall -c 'git reset --hard ; git clean -fdx'
-repo sync -f
+
+# Sync repos
+if [[ "-o" != "$1" ]]; then
+	repo sync -f
+fi
 
 # Get Terminal Emulator
 ./vendor/cm/get-prebuilts
