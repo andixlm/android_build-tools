@@ -4,7 +4,7 @@ How to get:
 Run 'git clone https://github.com/andixlm/build_tools' in root of ROM sources directory.
 
 Description of scripts:
-resync.sh - reset all changes in ROM sources, sync and get prebuilts.
+resync.sh - reset all changes in ROM sources, sync and get prebuilts. Use -o to reset changes only.
 -----
 patch.sh - patch ROM sources to make them work with S II Plus.
 -----
