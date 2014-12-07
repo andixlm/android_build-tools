@@ -9,3 +9,7 @@ resync.sh - reset all changes in ROM sources, sync and get prebuilts. Use -o to 
 patch.sh - patch ROM sources to make them work with S II Plus.
 -----
 build.sh - build ROM for S II Plus. It asks for cleaning of 'out' directory (make clean) and device (i9105 or i9105p), then build for chosen device. Also it handles first argument ('--i9105' or '--i9105p'). If it's used, then it'll build ROM for chosen device without cleaning. To build boot image (or recovery image) for device defined in first argument without the whole ROM building use second argument '--mb' ('--mr' for recovery). 
+
+Credits:
+pawitp - patches
+LuK1337 - scripts
