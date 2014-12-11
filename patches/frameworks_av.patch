@@ -199,3 +199,36 @@ index 25a77d0..3881994 100644
 -- 
 1.9.3 (Apple Git-50)
 
+
+From bf53c48383092b0de7f7e15958511f70b218074b Mon Sep 17 00:00:00 2001
+From: Pawit Pornkitprasan <p.pawit@gmail.com>
+Date: Wed, 10 Dec 2014 17:38:10 +0700
+Subject: [PATCH 6/6] AudioFlinger: i9082: HACK: force audio to 48 KHz
+
+Let surfaceflinger do all the resampling instead of the audio HAL
+
+Don't know if it fixes anything, but worth a try
+
+Change-Id: I0113831464f2f64c26a9c93bba8fe6b8229b09b4
+---
+ services/audioflinger/AudioFlinger.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/services/audioflinger/AudioFlinger.cpp b/services/audioflinger/AudioFlinger.cpp
+index 3881994..036b6c9 100644
+--- a/services/audioflinger/AudioFlinger.cpp
++++ b/services/audioflinger/AudioFlinger.cpp
+@@ -2236,8 +2236,9 @@ sp<AudioFlinger::RecordThread> AudioFlinger::openInput_l(audio_module_handle_t m
+     audio_stream_in_t *inStream = NULL;
+
+ #ifdef CAPRI_HWC
+-    ALOGD("Forcing channel mask to mono on capri");
++    ALOGD("Forcing input to mono 48K on capri");
+     halconfig.channel_mask = AUDIO_CHANNEL_IN_MONO;
++    halconfig.sample_rate = 48000;
+ #endif
+
+     status_t status = inHwHal->open_input_stream(inHwHal, *input, device, &halconfig,
+--
+1.9.3 (Apple Git-50)
+
