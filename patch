@@ -14,7 +14,6 @@ PATCHES=(
 'hardware/broadcom/libbt		hardware_broadcom_libbt.patch'
 'packages/services/Telephony	packages_services_Telephony.patch'
 'system/core					system_core.patch'
-'vendor/cm						vendor_cm.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
