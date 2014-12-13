@@ -10,6 +10,3 @@ repo forall -c 'git reset --hard ; git clean -fdx'
 if [[ "-o" != "$1" ]]; then
 	repo sync -f
 fi
-
-# Get Terminal Emulator
-./vendor/cm/get-prebuilts
