@@ -1,7 +1,7 @@
-From ee9c238c005b5a506d361dc4585a1ea29dd978c2 Mon Sep 17 00:00:00 2001
+From e5dadfcce39ce1ffb9719ec5d7cef99916dc09ed Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 16 Nov 2014 14:35:29 +0700
-Subject: [PATCH 2/2] HACK: i9082: disable libwifi-hal-bcm
+Subject: [PATCH] HACK: i9082: disable libwifi-hal-bcm
 
 Crashes on boot (due to module?)
 

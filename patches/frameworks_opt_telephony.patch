@@ -1,7 +1,7 @@
-From cf44099c23015eeab923c894162e0c06d5efcb52 Mon Sep 17 00:00:00 2001
+From 04884ad42eba79b89ff50dbede8473f68ec5b922 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 31 May 2014 12:34:56 +0700
-Subject: [PATCH 2/3] telephony: support for RIL that does not send
+Subject: [PATCH] telephony: support for RIL that does not send
  UNSOL_CALL_RING
 
 Samsung Broadcom RIL does not send UNSOL_CALL_RING at all, so it

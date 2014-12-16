@@ -1,7 +1,7 @@
-From 2a4d5e43e64bfadb64ddbea8551bf219ab67eca6 Mon Sep 17 00:00:00 2001
+From 96784b3a2f9f07dce4cd5802a93d31446a66710e Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 23 Nov 2014 15:48:23 +0700
-Subject: [PATCH 1/2] Telephony: GSM: remove 'Carrier Settings' regardless of
+Subject: [PATCH] Telephony: GSM: remove 'Carrier Settings' regardless of
  csp_enabled
 
 Carrier Settings should be removed when config_carrier_settings_enable
