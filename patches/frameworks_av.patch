@@ -1,7 +1,7 @@
-From 367da96f069364603393c08bdb823a5dcab26eee Mon Sep 17 00:00:00 2001
+From 8dafd7111d803dbe4e5d03f7f836588dab495c6e Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 24 Apr 2013 11:37:19 +0700
-Subject: [PATCH 1/7] OMXCodec: Re-implement requires-flush-before-shutdown
+Subject: [PATCH 1/8] OMXCodec: Re-implement requires-flush-before-shutdown
  quirk
 
 Support is already there, but is not in the codec quirk reading list.
@@ -30,10 +30,10 @@ index fe38f16..b6e4d25 100644
 1.9.3 (Apple Git-50)
 
 
-From fd7113d9e1276fe416ae3006bc56bc5941efb71e Mon Sep 17 00:00:00 2001
+From 76a1193ab038a74aed0e93936d9fbcd33e622390 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 17 Dec 2013 13:15:52 +0700
-Subject: [PATCH 2/7] OMXCodec: set default input buffer size
+Subject: [PATCH 2/8] OMXCodec: set default input buffer size
 
 Broadcom OMX only set the buffer size to 65536 by default which
 is not enough for higher bitrate video
@@ -47,7 +47,7 @@ Change-Id: I74372f3d821e41feb38b9bc0cca4ef56aa019493
  2 files changed, 25 insertions(+)
 
 diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
-index acba802..77e68f2 100644
+index 229e704..04f6d68 100644
 --- a/media/libstagefright/ACodec.cpp
 +++ b/media/libstagefright/ACodec.cpp
 @@ -1681,6 +1681,19 @@ status_t ACodec::configureCodec(
@@ -97,10 +97,10 @@ index b6e4d25..b4aa20d 100644
 1.9.3 (Apple Git-50)
 
 
-From 23c5ae9271fb311eb91cf03f951089ee88b66fff Mon Sep 17 00:00:00 2001
+From 074c2bad6280cf58bed18d4d5077bca526904368 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 19 Nov 2014 20:33:58 +0700
-Subject: [PATCH 3/7] ACodec: skip port index checking on vc4 encoder
+Subject: [PATCH 3/8] ACodec: skip port index checking on vc4 encoder
 
 Change-Id: I3fe742a8ec4b7f9bc0c4e5f0825fd3b88965a95e
 ---
@@ -108,7 +108,7 @@ Change-Id: I3fe742a8ec4b7f9bc0c4e5f0825fd3b88965a95e
  1 file changed, 5 insertions(+)
 
 diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
-index 77e68f2..462767f 100644
+index 04f6d68..67558ab 100644
 --- a/media/libstagefright/ACodec.cpp
 +++ b/media/libstagefright/ACodec.cpp
 @@ -3374,6 +3374,11 @@ status_t ACodec::getPortFormat(OMX_U32 portIndex, sp<AMessage> &notify) {
@@ -127,10 +127,10 @@ index 77e68f2..462767f 100644
 1.9.3 (Apple Git-50)
 
 
-From 07244c515020af3f846b9fff2cb70bdcc1e826b5 Mon Sep 17 00:00:00 2001
+From 1b2fc9bc1a7c87709d64d8f406f9036b81cd889b Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 23 Nov 2014 17:27:20 +0700
-Subject: [PATCH 4/7] ACodec: Don't trust provided width/height when setting
+Subject: [PATCH 4/8] ACodec: Don't trust provided width/height when setting
  input buffer size
 
 They are bogus
@@ -141,7 +141,7 @@ Change-Id: I202b291a84d2f9a8c29aa2177ba52a0465f39deb
  1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/media/libstagefright/ACodec.cpp b/media/libstagefright/ACodec.cpp
-index 462767f..410ca33 100644
+index 67558ab..5a4f1bd 100644
 --- a/media/libstagefright/ACodec.cpp
 +++ b/media/libstagefright/ACodec.cpp
 @@ -1684,13 +1684,9 @@ status_t ACodec::configureCodec(
@@ -165,10 +165,10 @@ index 462767f..410ca33 100644
 1.9.3 (Apple Git-50)
 
 
-From 0961825f6f4db5632f4ae4b7184652c70ae09e05 Mon Sep 17 00:00:00 2001
+From 51836ccc67e9d0576e5e15dc2dd836f070d5c124 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 28 Nov 2014 21:07:59 +0700
-Subject: [PATCH 5/7] AudioFlinger: i9082: HACK: disable stereo record
+Subject: [PATCH 5/8] AudioFlinger: i9082: HACK: disable stereo record
 
 Stereo record causes audio to speed up x2 for some reason.
 Record in mono and let AudioFlinger resample to stereo
@@ -180,7 +180,7 @@ Change-Id: I59236addc022186fa35bd3b3914f42709c2318de
  1 file changed, 6 insertions(+)
 
 diff --git a/services/audioflinger/AudioFlinger.cpp b/services/audioflinger/AudioFlinger.cpp
-index 25a77d0..3881994 100644
+index 0717e57..557e65a 100644
 --- a/services/audioflinger/AudioFlinger.cpp
 +++ b/services/audioflinger/AudioFlinger.cpp
 @@ -2234,6 +2234,12 @@ sp<AudioFlinger::RecordThread> AudioFlinger::openInput_l(audio_module_handle_t m
@@ -200,10 +200,10 @@ index 25a77d0..3881994 100644
 1.9.3 (Apple Git-50)
 
 
-From c93f4d2a111372be803c475e0e1cb886b939fd34 Mon Sep 17 00:00:00 2001
+From 8cba9cf06848809dec2a07d14ad9139789720171 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 10 Dec 2014 17:38:10 +0700
-Subject: [PATCH 6/7] AudioFlinger: i9082: HACK: force audio to 48 KHz
+Subject: [PATCH 6/8] AudioFlinger: i9082: HACK: force audio to 48 KHz
 
 Let surfaceflinger do all the resampling instead of the audio HAL
 
@@ -215,7 +215,7 @@ Change-Id: I0113831464f2f64c26a9c93bba8fe6b8229b09b4
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/services/audioflinger/AudioFlinger.cpp b/services/audioflinger/AudioFlinger.cpp
-index 3881994..036b6c9 100644
+index 557e65a..3a3c16b 100644
 --- a/services/audioflinger/AudioFlinger.cpp
 +++ b/services/audioflinger/AudioFlinger.cpp
 @@ -2236,8 +2236,9 @@ sp<AudioFlinger::RecordThread> AudioFlinger::openInput_l(audio_module_handle_t m
@@ -233,10 +233,10 @@ index 3881994..036b6c9 100644
 1.9.3 (Apple Git-50)
 
 
-From fa029005cc27ee74fba670f42a0f9fecd177c5a6 Mon Sep 17 00:00:00 2001
+From 1ea90932594ec15910f112c98662f0cf9724edea Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 16 Dec 2014 21:12:22 +0700
-Subject: [PATCH 7/7] stagefright: i9082: don't allocate too many extra buffers
+Subject: [PATCH 7/8] stagefright: i9082: don't allocate too many extra buffers
 
 Too many extra buffers (for a total of 8) causes random
 video freezes and freezes on rotation
@@ -270,7 +270,7 @@ index b4aa20d..5b7d25d 100644
 @@ -2269,7 +2269,11 @@ status_t OMXCodec::allocateOutputBuffersFromNativeWindow() {
      CODEC_LOGI("OMX-buffers: min=%u actual=%u undeq=%d+1",
              def.nBufferCountMin, def.nBufferCountActual, minUndequeuedBufs);
-
+ 
 +#ifdef CAPRI_HWC
 +    for (OMX_U32 extraBuffers = 1; /* condition inside loop */; extraBuffers--) {
 +#else
@@ -279,5 +279,61 @@ index b4aa20d..5b7d25d 100644
          OMX_U32 newBufferCount =
              def.nBufferCountMin + minUndequeuedBufs + extraBuffers;
          def.nBufferCountActual = newBufferCount;
---
+-- 
 1.9.3 (Apple Git-50)
+
+
+From 2dc804262ae9fcb99e1be3551dde0c06ab76734b Mon Sep 17 00:00:00 2001
+From: Pawit Pornkitprasan <p.pawit@gmail.com>
+Date: Sat, 20 Dec 2014 19:09:59 +0700
+Subject: [PATCH 8/8] stagefright: CAPRI_HWC: fix for screen recording
+
+Change-Id: Ib8a677eb1ecabc30efe163faa9b209f4db966437
+---
+ media/libstagefright/omx/GraphicBufferSource.cpp | 2 ++
+ media/libstagefright/omx/OMXNodeInstance.cpp     | 7 +++++++
+ 2 files changed, 9 insertions(+)
+
+diff --git a/media/libstagefright/omx/GraphicBufferSource.cpp b/media/libstagefright/omx/GraphicBufferSource.cpp
+index 3e70956..d600573 100644
+--- a/media/libstagefright/omx/GraphicBufferSource.cpp
++++ b/media/libstagefright/omx/GraphicBufferSource.cpp
+@@ -269,12 +269,14 @@ void GraphicBufferSource::codecBufferEmptied(OMX_BUFFERHEADERTYPE* header) {
+         } else if (type == kMetadataBufferTypeGraphicBuffer) {
+             GraphicBuffer *buffer;
+             memcpy(&buffer, data + 4, sizeof(buffer));
++#ifndef CAPRI_HWC
+             if (buffer != codecBuffer.mGraphicBuffer.get()) {
+                 // should never happen
+                 ALOGE("codecBufferEmptied: buffer is %p, expected %p",
+                         buffer, codecBuffer.mGraphicBuffer.get());
+                 CHECK(!"codecBufferEmptied: mismatched buffer");
+             }
++#endif
+         }
+     }
+ 
+diff --git a/media/libstagefright/omx/OMXNodeInstance.cpp b/media/libstagefright/omx/OMXNodeInstance.cpp
+index 8c22255..eaa20c9 100644
+--- a/media/libstagefright/omx/OMXNodeInstance.cpp
++++ b/media/libstagefright/omx/OMXNodeInstance.cpp
+@@ -733,9 +733,16 @@ status_t OMXNodeInstance::createInputSurface(
+     CHECK(oerr == OMX_ErrorNone);
+ 
+     if (def.format.video.eColorFormat != OMX_COLOR_FormatAndroidOpaque) {
++#ifdef CAPRI_HWC
++        // VC Encoder change OMX_COLOR_FormatAndroidOpaque to 0x7F000005
++        if (def.format.video.eColorFormat != 0x7F000005) {
++#endif
+         ALOGE("createInputSurface requires COLOR_FormatSurface "
+               "(AndroidOpaque) color format");
+         return INVALID_OPERATION;
++#ifdef CAPRI_HWC
++        }
++#endif
+     }
+ 
+     GraphicBufferSource* bufferSource = new GraphicBufferSource(
+-- 
+1.9.3 (Apple Git-50)
+

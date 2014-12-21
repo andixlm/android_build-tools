@@ -1,7 +1,7 @@
-From a019f7f4e7e9b07cc1d49144fb1897ef7c4a86fa Mon Sep 17 00:00:00 2001
+From 075ee6cc6a862fe8ece445b507e7e0afaf8a1f87 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 14:47:35 +0700
-Subject: [PATCH 2/4] frameworks: base: add KEYCODE_HOME to wake keys
+Subject: [PATCH 1/3] frameworks: base: add KEYCODE_HOME to wake keys
 
 Change-Id: I77d70df2263dd9c75b02efde18d91585b1ad29f9
 ---
@@ -24,10 +24,10 @@ index 788d23f..e2078d0 100644
 1.9.3 (Apple Git-50)
 
 
-From 6481a5b5a1f10eaf088c20841e5c39d4d90d5956 Mon Sep 17 00:00:00 2001
+From 4c982ef1be41e62fde5e77d18c2e911aafd7612c Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 22:33:16 +0700
-Subject: [PATCH 4/4] Camera: HACK: i9082: API hacks
+Subject: [PATCH 2/3] Camera: HACK: i9082: API hacks
 
 CTS 5.0 requires the presence of an auto mode, so applications
 may try to use auto without checking.
@@ -87,7 +87,7 @@ index d461bca..a34a758 100644
 From a85be7ba1b57c954e0a0e73f35990e1f6ab3859d Mon Sep 17 00:00:00 2001
 From: andixlm <andixev@gmail.com>
 Date: Sat, 29 Nov 2014 15:36:20 +0500
-Subject: [PATCH] LED
+Subject: [PATCH 3/3] LED
 
 Change-Id: Iea18d975dbf7a22b08f5d41b8a0e3c7443ab385c
 ---
