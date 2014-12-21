@@ -1,33 +1,7 @@
-From 075ee6cc6a862fe8ece445b507e7e0afaf8a1f87 Mon Sep 17 00:00:00 2001
-From: Pawit Pornkitprasan <p.pawit@gmail.com>
-Date: Sat, 15 Nov 2014 14:47:35 +0700
-Subject: [PATCH 1/3] frameworks: base: add KEYCODE_HOME to wake keys
-
-Change-Id: I77d70df2263dd9c75b02efde18d91585b1ad29f9
----
- core/java/android/view/KeyEvent.java | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/core/java/android/view/KeyEvent.java b/core/java/android/view/KeyEvent.java
-index 788d23f..e2078d0 100644
---- a/core/java/android/view/KeyEvent.java
-+++ b/core/java/android/view/KeyEvent.java
-@@ -1812,6 +1812,7 @@ public class KeyEvent extends InputEvent implements Parcelable {
-             case KeyEvent.KEYCODE_VOLUME_UP:
-             case KeyEvent.KEYCODE_VOLUME_DOWN:
-             case KeyEvent.KEYCODE_VOLUME_MUTE:
-+            case KeyEvent.KEYCODE_HOME:
-                 return true;
-         }
-         return false;
--- 
-1.9.3 (Apple Git-50)
-
-
-From 4c982ef1be41e62fde5e77d18c2e911aafd7612c Mon Sep 17 00:00:00 2001
+From ee7f936857bdaad8d167c4f8bbc6ed57b5d821c6 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 22:33:16 +0700
-Subject: [PATCH 2/3] Camera: HACK: i9082: API hacks
+Subject: [PATCH 1/2] Camera: HACK: i9082: API hacks
 
 CTS 5.0 requires the presence of an auto mode, so applications
 may try to use auto without checking.
@@ -84,101 +58,52 @@ index d461bca..a34a758 100644
 1.9.3 (Apple Git-50)
 
 
-From a85be7ba1b57c954e0a0e73f35990e1f6ab3859d Mon Sep 17 00:00:00 2001
-From: andixlm <andixev@gmail.com>
-Date: Sat, 29 Nov 2014 15:36:20 +0500
-Subject: [PATCH 3/3] LED
+From 8f4f6f4b27a828c00342dbf3433d7b0eeb1b4cfb Mon Sep 17 00:00:00 2001
+From: Pawit Pornkitprasan <p.pawit@gmail.com>
+Date: Sun, 21 Dec 2014 16:23:31 +0700
+Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
+ button is pressed
 
-Change-Id: Iea18d975dbf7a22b08f5d41b8a0e3c7443ab385c
+This more closely emulates stock Samsung behavior
+
+Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
 ---
- .../com/android/server/input/InputManagerService.java |  4 ++++
- .../com/android/server/power/PowerManagerService.java | 19 ++++++++++++++-----
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ .../core/java/com/android/server/power/PowerManagerService.java   | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/services/core/java/com/android/server/input/InputManagerService.java b/services/core/java/com/android/server/input/InputManagerService.java
-index fc7f62c..87f4d99 100644
---- a/services/core/java/com/android/server/input/InputManagerService.java
-+++ b/services/core/java/com/android/server/input/InputManagerService.java
-@@ -21,6 +21,7 @@ import com.android.internal.R;
- import com.android.internal.util.XmlUtils;
- import com.android.server.DisplayThread;
- import com.android.server.LocalServices;
-+import com.android.server.power.PowerManagerService;
- import com.android.server.Watchdog;
- 
- import org.xmlpull.v1.XmlPullParser;
-@@ -1507,6 +1508,9 @@ public class InputManagerService extends IInputManager.Stub
- 
-     // Native callback.
-     private int interceptKeyBeforeQueueing(KeyEvent event, int policyFlags) {
-+    if ((event.getScanCode() == 139 || event.getScanCode() == 158) && event.getAction() == 0) {
-+        PowerManagerService.ButtonsLightON();
-+    }
-         return mWindowManagerCallbacks.interceptKeyBeforeQueueing(event, policyFlags);
-     }
- 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index db494fe..4bc2f75 100644
+index 3cb2261..b320910 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -172,6 +172,9 @@ public final class PowerManagerService extends SystemService
+@@ -240,6 +240,7 @@ public final class PowerManagerService extends SystemService
+     // Timestamp of the last call to user activity.
+     private long mLastUserActivityTime;
+     private long mLastUserActivityTimeNoChangeLights;
++    private long mLastButtonActivityTime;
  
-     private static final float PROXIMITY_NEAR_THRESHOLD = 5.0f;
- 
-+    private static long buttonNextTimeout = -1;
-+    private static int buttonBrightness = 0;
+     // Timestamp of last interactive power hint.
+     private long mLastInteractivePowerHintTime;
+@@ -1128,6 +1129,11 @@ public final class PowerManagerService extends SystemService
+                     return true;
+                 }
+             } else {
++                if (eventTime > mLastButtonActivityTime && (event & PowerManager.USER_ACTIVITY_EVENT_BUTTON) != 0) {
++                    mLastButtonActivityTime = eventTime;
++                    mDirty |= DIRTY_USER_ACTIVITY;
++                }
 +
-     private final Context mContext;
-     private final ServiceThread mHandlerThread;
-     private final PowerManagerHandler mHandler;
-@@ -187,13 +190,13 @@ public final class PowerManagerService extends SystemService
-     private SettingsObserver mSettingsObserver;
-     private DreamManagerInternal mDreamManager;
-     private Light mAttentionLight;
--    private Light mButtonsLight;
-+    private static Light mButtonsLight;
-     private Light mKeyboardLight;
-     private Light mCapsLight;
-     private Light mFnLight;
+                 if (eventTime > mLastUserActivityTime) {
+                     mLastUserActivityTime = eventTime;
+                     mDirty |= DIRTY_USER_ACTIVITY;
+@@ -1628,7 +1634,7 @@ public final class PowerManagerService extends SystemService
+                         }
  
--    private int mButtonTimeout;
--    private int mButtonBrightness;
-+    private static int mButtonTimeout;
-+    private static int mButtonBrightness;
-     private int mButtonBrightnessSettingDefault;
-     private int mKeyboardBrightness;
-     private int mKeyboardBrightnessSettingDefault;
-@@ -1597,7 +1600,7 @@ public final class PowerManagerService extends SystemService
-                     nextTimeout = mLastUserActivityTime
-                             + screenOffTimeout - screenDimDuration;
-                     if (now < nextTimeout) {
--                        int buttonBrightness, keyboardBrightness;
-+                        int keyboardBrightness;
-                         if (mButtonBrightnessOverrideFromWindowManager >= 0) {
-                             buttonBrightness = mButtonBrightnessOverrideFromWindowManager;
-                             keyboardBrightness = mButtonBrightnessOverrideFromWindowManager;
-@@ -1610,7 +1613,7 @@ public final class PowerManagerService extends SystemService
-                         if (mButtonTimeout != 0 && now > mLastUserActivityTime + mButtonTimeout) {
+                         mKeyboardLight.setBrightness(mKeyboardVisible ? keyboardBrightness : 0);
+-                        if (mButtonTimeout != 0 && now > mLastUserActivityTime + mButtonTimeout) {
++                        if (mButtonTimeout != 0 && now > mLastButtonActivityTime + mButtonTimeout) {
                               mButtonsLight.setBrightness(0);
                          } else {
--                            mButtonsLight.setBrightness(buttonBrightness);
-+                            if (now > buttonNextTimeout) mButtonsLight.setBrightness(0);
-                             if (buttonBrightness != 0 && mButtonTimeout != 0) {
-                                 nextTimeout = now + mButtonTimeout;
-                             }
-@@ -1669,6 +1672,12 @@ public final class PowerManagerService extends SystemService
-         }
-     }
- 
-+    static public void ButtonsLightON() {
-+        long timing = SystemClock.uptimeMillis();
-+        mButtonsLight.setBrightness(buttonBrightness);
-+        buttonNextTimeout = timing + mButtonTimeout;
-+    }
-+
-     /**
-      * Called when a user activity timeout has occurred.
-      * Simply indicates that something about user activity has changed so that the new
+                             mButtonsLight.setBrightness(buttonBrightness);
 -- 
-1.9.1
+1.9.3 (Apple Git-50)
 
