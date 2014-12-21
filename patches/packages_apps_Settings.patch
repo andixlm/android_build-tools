@@ -779,18 +779,18 @@ index 0000000..e777e52
 +    }
 +}
 diff --git a/src/com/android/settings/ButtonSettings.java b/src/com/android/settings/ButtonSettings.java
-index af967eb..7c48697 100644
+index 2be6acb..d9a005f 100644
 --- a/src/com/android/settings/ButtonSettings.java
 +++ b/src/com/android/settings/ButtonSettings.java
-@@ -55,6 +55,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
+@@ -56,6 +56,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
+     private static final String KEY_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
      private static final String KEY_VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
-     private static final String KEY_VOLUME_WAKE_DEVICE = "volume_key_wake_device";
      private static final String DISABLE_NAV_KEYS = "disable_nav_keys";
 +    private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
      private static final String KEY_POWER_END_CALL = "power_end_call";
      private static final String KEY_HOME_ANSWER_CALL = "home_answer_call";
  
-@@ -237,6 +238,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
+@@ -284,6 +285,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
          } else {
              prefScreen.removePreference(volumeCategory);
          }
@@ -803,7 +803,7 @@ index af967eb..7c48697 100644
      }
  
      @Override
-@@ -372,6 +379,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
+@@ -407,6 +414,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                  (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
          final PreferenceCategory appSwitchCategory =
                  (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
@@ -819,6 +819,7 @@ index af967eb..7c48697 100644
  
          /* Toggle hardkey control availability depending on navbar state */
          if (homeCategory != null) {
+
 -- 
 1.9.1
 
