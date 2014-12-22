@@ -13,7 +13,6 @@ PATCHES=(
 'hardware/broadcom/libbt		hardware_broadcom_libbt.patch'
 'packages/apps/Mms				packages_apps_Mms.patch'
 'packages/apps/Settings			packages_apps_Settings.patch'
-'packages/services/Telephony	packages_services_Telephony.patch'
 'system/core					system_core.patch'
 )
 
