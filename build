@@ -4,71 +4,124 @@ cd ..
 
 export USE_CCACHE=1
 
-PASS=0
+# Check 1st option
+case "$1" in
+	--i9105 )
+		DEVICE=$1
+		FAST=1
+		;;
+	--i9105p )
+		DEVICE=$1
+		FAST=1
+		;;
+	--both )
+		BOTH=1
+		DEVICE=i9105,i9105p
+		FAST=1
+		;;
+	"" )
+		;;
+	* )
+		echo Unknown 1st option: $1
+		exit 0
+		;;
+esac
 
-### Handle first argument
-# no first argument = ask for clean and device
-if [ -z $1 ]; then
-	echo -n 'Make it clean? (y/N): '
-	read CLEAN
-	if [ "$CLEAN" = "y" ]; then
+# If 1st option is used, check 2nd option
+if [[ -n $FAST ]]; then
+	case "$2" in
+		--mb )
+			MB=1
+			;;
+		--mr )
+			MR=1
+			;;
+		--mc )
+			MC=1
+			;;
+		"" )
+			;;
+		* )
+			echo Unknown 2nd option: $2
+			exit 0
+	esac
+fi
+
+# Fast building if options used
+if [[ $FAST ]]; then
+
+	# Clean if needed
+	if [[ $MC ]]; then
 		make clean
 	fi
 
-# --i9105 = build for i9105 without cleaning
-elif [ "$1" = "--i9105" ]; then
-	PASS=1
-	DEVICE=i9105
+	# Build for only device
+	if [[ -z $BOTH ]]; then
+		. build/envsetup.sh
+		brunch $DEVICE
 
-# --i9105p = build for i9105p without cleaning
-elif [ "$1" = "--i9105p" ]; then
-	PASS=1
-	DEVICE=i9105p
+	# Build for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			brunch $NAME
+		done
+	fi
 
-else
-	echo 'Wrong first argument! Stopping.'
-	exit 1
-fi
-###
+# Make boot image
+elif [[ $MB ]]; then
 
-### Handle second argument
-# --mb = make boot image without the whole ROM building
-if [ '-n $1' -a "$2" = "--mb" ]; then
-	SA=b
+	# Make it for only device
+	if [[ -z $BOTH ]]; then
+		. build/envsetup.sh
+		breakfast $DEVICE
+		mka bootimage
 
-# --mr = make recovery image without the whole ROM building
-elif [ '-n $1' -a "$2" = "--mr" ]; then
-	SA=r
+	# Make it for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			breakfast $NAME
+			mka bootimage
+		done
+	fi
 
-elif [ "$2" != "--mb" -o "$2" != "--mr" ]; then
-	if [ "$2" != "" ]; then
-		echo 'Wrong second argument! Stopping.'
-		exit 1
+# Make recovery image
+elif [[ $MR ]]; then
+
+	# Make it for only device
+	if [[ -z $BOTH ]]; then
+		. build/envsetup.sh
+		breakfast $DEVICE
+		mka recoveryimage
+
+	# Make it for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			breakfast $NAME
+			mka recoveryimage
+		done
 	fi
 fi
-###
 
-while [ $PASS -eq 0 ]; do
+# Normal building if no options used
+if [[ -z $FAST ]]; then
 	echo -n 'Device? (i9105 or i9105p): '
 	read DEVICE
-	if [ "$DEVICE" = "i9105" ] || [ "$DEVICE" = "i9105p" ]; then 
-		PASS=1
-	else
-		echo Wrong input! Try again.
+	# Check if given proper device name
+	if [[ $DEVICE != i9105 && $DEVICE != i9105p ]]; then
+		echo Unknown device name: $DEVICE
+		exit 0
 	fi
-done
 
-if [ -z $SA ]; then
+	echo -n 'Make it clean? (y/N): '
+	read CLEAN
+	# Clean if needed
+	if [[ $CLEAN ]]; then
+		make clean
+	fi
+
 	. build/envsetup.sh
 	brunch $DEVICE
-
-elif [ "$SA" = "b" ]; then
-	. build/envsetup.sh
-	breakfast $DEVICE
-	mka bootimage
-
-elif [ "$SA" = "r" ]; then
-	. build/envsetup.sh
-	breakfast $DEVICE
-	mka recoveryimage
 fi
