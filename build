@@ -107,19 +107,19 @@ fi
 
 # Normal building if no options used
 if [[ -z $FAST ]]; then
+	echo -n 'Make it clean? (y/N): '
+	read CLEAN
+	# Clean if needed
+	if [[ $CLEAN ]]; then
+		make clean
+	fi
+
 	echo -n 'Device? (i9105 or i9105p): '
 	read DEVICE
 	# Check if given proper device name
 	if [[ $DEVICE != i9105 && $DEVICE != i9105p ]]; then
 		echo Unknown device name: $DEVICE
 		exit 0
-	fi
-
-	echo -n 'Make it clean? (y/N): '
-	read CLEAN
-	# Clean if needed
-	if [[ $CLEAN ]]; then
-		make clean
 	fi
 
 	. build/envsetup.sh
