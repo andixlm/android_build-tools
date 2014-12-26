@@ -58,7 +58,7 @@ if [[ $FAST && !($MM) ]]; then
 	fi
 
 	# Build for only device
-	if [[ -z $BOTH ]]; then
+	if [[ !($BOTH) ]]; then
 		. build/envsetup.sh
 		brunch $DEVICE
 
@@ -74,7 +74,7 @@ if [[ $FAST && !($MM) ]]; then
 elif [[ $MB ]]; then
 
 	# Make it for only device
-	if [[ -z $BOTH ]]; then
+	if [[ !($BOTH) ]]; then
 		. build/envsetup.sh
 		breakfast $DEVICE
 		mka bootimage
@@ -92,7 +92,7 @@ elif [[ $MB ]]; then
 elif [[ $MR ]]; then
 
 	# Make it for only device
-	if [[ -z $BOTH ]]; then
+	if [[ !($BOTH) ]]; then
 		. build/envsetup.sh
 		breakfast $DEVICE
 		mka recoveryimage
@@ -108,7 +108,7 @@ elif [[ $MR ]]; then
 fi
 
 # Normal building if no options used
-if [[ -z $FAST ]]; then
+if [[ !($FAST) ]]; then
 	echo -n 'Make it clean? (y/N): '
 	read CLEAN
 	# Clean if needed
