@@ -32,15 +32,14 @@ if [[ $FAST ]]; then
 	case "$2" in
 		--mb )
 			MB=1
-			SO=1
+			MM=1
 			;;
 		--mr )
 			MR=1
-			SO=1
+			MM=1
 			;;
 		--mc )
 			MC=1
-			SO=1
 			;;
 		"" )
 			;;
@@ -51,7 +50,7 @@ if [[ $FAST ]]; then
 fi
 
 # Fast building if options used
-if [[ $FAST && !($SO) ]]; then
+if [[ $FAST && !($MM) ]]; then
 
 	# Clean if needed
 	if [[ $MC ]]; then
