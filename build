@@ -28,16 +28,19 @@ case "$1" in
 esac
 
 # If 1st option is used, check 2nd option
-if [[ -n $FAST ]]; then
+if [[ $FAST ]]; then
 	case "$2" in
 		--mb )
 			MB=1
+			SO=1
 			;;
 		--mr )
 			MR=1
+			SO=1
 			;;
 		--mc )
 			MC=1
+			SO=1
 			;;
 		"" )
 			;;
@@ -48,7 +51,7 @@ if [[ -n $FAST ]]; then
 fi
 
 # Fast building if options used
-if [[ $FAST ]]; then
+if [[ $FAST && !($SO) ]]; then
 
 	# Clean if needed
 	if [[ $MC ]]; then
