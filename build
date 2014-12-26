@@ -6,12 +6,12 @@ export USE_CCACHE=1
 
 # Check 1st option
 case "$1" in
-	--i9105 )
-		DEVICE=i9105
+	i9105 )
+		DEVICE=$1
 		FAST=1
 		;;
-	--i9105p )
-		DEVICE=i9105p
+	i9105p )
+		DEVICE=$1
 		FAST=1
 		;;
 	--both )
