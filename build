@@ -27,7 +27,7 @@ case "$1" in
 		;;
 esac
 
-# If 1st option is used, check 2nd option
+# If 1st option used, check 2nd option
 if [[ $FAST ]]; then
 	case "$2" in
 		--mb )
