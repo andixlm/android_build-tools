@@ -8,7 +8,7 @@ resync - reset all changes in ROM sources, sync and get prebuilts. Use "-o" to r
 ----------
 patch - patch ROM sources.
 ----------
-build - build ROM. It asks for cleaning of out directory (make clean) and device (i9105 or i9105p), then build for chosen device. Also it handles 1st option ("i9105" or "i9105p" or "--both"). To build with cleaning use "--mc" as a 2nd option. To build boot image (or recovery image) for device defined in 1st option w/o whole ROM building use 2nd option "--mb" ("--mr" for recovery).
+build - build ROM. It asks for cleaning of out directory (make clean) and device (i9105 or i9105p), then build for chosen device. Also it handles 1st option ("i9105" or "i9105p" or "--both"). To build with cleaning use "-c" as a 2nd option. To build boot image (or recovery image) for device defined in 1st option w/o whole ROM building use 2nd option "-b" ("-r" for recovery).
 
 Usage: 
 Open terminal in build_tools dir and run one of the scripts.

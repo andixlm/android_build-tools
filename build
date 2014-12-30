@@ -30,15 +30,15 @@ esac
 # If 1st option used, check 2nd option
 if [[ $FAST ]]; then
 	case "$2" in
-		--mb )
+		-b|--make-boot )
 			MB=1
 			MM=1
 			;;
-		--mr )
+		-r|--make-recovery )
 			MR=1
 			MM=1
 			;;
-		--mc )
+		-c|--make-clean )
 			MC=1
 			;;
 		"" )
