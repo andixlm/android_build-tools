@@ -1,0 +1,25 @@
+From 1e8407cdf88e4d5ecd9765950f2b9cc7fb9c940d Mon Sep 17 00:00:00 2001
+From: andixlm <andixev@gmail.com>
+Date: Wed, 31 Dec 2014 19:25:15 +0500
+Subject: [PATCH] Remove CMUpdater package
+
+Change-Id: I7f27d1de2f60740cfb9e837ccd4bcf571d23b43b
+---
+ config/common.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index 2a87112..09afab6 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -145,7 +145,6 @@ PRODUCT_PACKAGES += \
+     CMFileManager \
+     Eleven \
+     LockClock \
+-    CMUpdater \
+     CMAccount \
+     CMHome
+ 
+-- 
+2.1.3
+

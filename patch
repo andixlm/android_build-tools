@@ -14,6 +14,7 @@ PATCHES=(
 'hardware/broadcom/wlan		hardware_broadcom_wlan.patch'
 'packages/apps/Mms			packages_apps_Mms.patch'
 'system/core				system_core.patch'
+'vendor/cm					vendor_cm.patch'
 )
 
 while [ "x${PATCHES[COUNT]}" != "x" ]
