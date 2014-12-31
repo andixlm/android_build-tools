@@ -140,9 +140,7 @@ secs=$(($tdiff % 60))
 
 # Print elapsed time
 tput setaf 2
-echo -e ""
-echo -e ""
+echo ""
 printf "#### TOTAL TIME ELAPSED %02g:%02g:%02g (hh:mm:ss) ####" $hours $mins $secs
-echo -e ""
-echo -e ""
+echo ""
 tput sgr0
