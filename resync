@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd ..
+
+# Use -o for resetting changes only.
+case "$1" in
+	"-o" )
+		RO=1
+		;;
+	"" )
+		;;
+	* )
+		echo Unknown option: $1
+		exit 0
+		;;
+esac
+
+# Reset changes
+repo forall -c 'git reset --hard ; git clean -fdx'
+
+# Sync sources
+if [[ -n $RO ]]; then
+	exit 0
+else
+	repo sync -f
+fi

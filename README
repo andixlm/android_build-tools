@@ -1,11 +1,15 @@
-Scripts and patches to build ROM for S II Plus
+Scripts and patches to build ROMs for S II Plus
 
 How to get:
-Run 'git clone https://github.com/andixlm/build_tools' in root of ROM sources directory.
+Run "git clone https://github.com/andixlm/build_tools" in root of ROM sources directory.
 
 Description of scripts:
-resync.sh - reset all changes in ROM sources, sync and get prebuilts.
------
-patch.sh - patch ROM sources to make them work with S II Plus.
------
-build.sh - build ROM for S II Plus. It asks for cleaning of 'out' directory (make clean) and device (i9105 or i9105p), then build for chosen device. Also it handles first argument ('--i9105' or '--i9105p'). If it's used, then it'll build ROM for chosen device without cleaning. To build boot image (or recovery image) for device defined in first argument without the whole ROM building use second argument '--mb' ('--mr' for recovery). 
+resync - reset all changes in ROM sources, sync and get prebuilts. Use "-o" to reset changes only.
+----------
+patch - patch ROM sources.
+----------
+build - build ROM. It asks for cleaning of out directory (make clean) and device (i9105 or i9105p), then build for chosen device. Also it handles 1st option ("i9105" or "i9105p" or "--both"). To build with cleaning use "-c" as a 2nd option. To build boot image (or recovery image) for device defined in 1st option w/o whole ROM building use 2nd option "-b" ("-r" for recovery).
+
+Credits:
+pawitp - patches
+luk1337 - initial implementation of scripts

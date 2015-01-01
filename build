@@ -1,0 +1,146 @@
+#!/bin/bash
+
+# Get start time
+start_time=$(date +"%s")
+
+cd ..
+
+export USE_CCACHE=1
+
+# Check 1st option
+case "$1" in
+	i9105 )
+		DEVICE=$1
+		FAST=1
+		;;
+	i9105p )
+		DEVICE=$1
+		FAST=1
+		;;
+	--both )
+		BOTH=1
+		DEVICE='i9105 i9105p'
+		FAST=1
+		;;
+	"" )
+		;;
+	* )
+		echo Unknown 1st option: $1
+		exit 0
+		;;
+esac
+
+# If 1st option used, check 2nd option
+if [[ $FAST ]]; then
+	case "$2" in
+		-b|--make-boot )
+			MB=1
+			MM=1
+			;;
+		-r|--make-recovery )
+			MR=1
+			MM=1
+			;;
+		-c|--make-clean )
+			MC=1
+			;;
+		"" )
+			;;
+		* )
+			echo Unknown 2nd option: $2
+			exit 0
+	esac
+fi
+
+# Fast building if options used
+if [[ $FAST && !($MM) ]]; then
+
+	# Clean if needed
+	if [[ $MC ]]; then
+		make clean
+	fi
+
+	# Build for only device
+	if [[ !($BOTH) ]]; then
+		. build/envsetup.sh
+		brunch $DEVICE
+
+	# Build for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			brunch $NAME
+		done
+	fi
+
+# Make boot image
+elif [[ $MB ]]; then
+
+	# Make it for only device
+	if [[ !($BOTH) ]]; then
+		. build/envsetup.sh
+		breakfast $DEVICE
+		mka bootimage
+
+	# Make it for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			breakfast $NAME
+			mka bootimage
+		done
+	fi
+
+# Make recovery image
+elif [[ $MR ]]; then
+
+	# Make it for only device
+	if [[ !($BOTH) ]]; then
+		. build/envsetup.sh
+		breakfast $DEVICE
+		mka recoveryimage
+
+	# Make it for both devices
+	else
+		for NAME in $DEVICE; do
+			. build/envsetup.sh
+			breakfast $NAME
+			mka recoveryimage
+		done
+	fi
+fi
+
+# Normal building if no options used
+if [[ !($FAST) ]]; then
+	echo -n 'Make it clean? (y/N): '
+	read CLEAN
+	# Clean if needed
+	if [[ $CLEAN ]]; then
+		make clean
+	fi
+
+	echo -n 'Device? (i9105 or i9105p): '
+	read DEVICE
+	# Check if given proper device name
+	if [[ $DEVICE != i9105 && $DEVICE != i9105p ]]; then
+		echo Unknown device name: $DEVICE
+		exit 0
+	fi
+
+	. build/envsetup.sh
+	brunch $DEVICE
+fi
+
+# Calculate elapsed time
+end_time=$(date +"%s")
+tdiff=$(($end_time-$start_time))
+hours=$(($tdiff / 3600 ))
+mins=$((($tdiff % 3600) / 60))
+secs=$(($tdiff % 60))
+
+# Print elapsed time
+tput setaf 2
+echo ""
+printf "#### TOTAL TIME ELAPSED %02g:%02g:%02g (hh:mm:ss) ####" $hours $mins $secs
+echo ""
+tput sgr0
