@@ -12,7 +12,6 @@ PATCHES=(
 'frameworks/opt/telephony	frameworks_opt_telephony.patch'
 'hardware/broadcom/libbt	hardware_broadcom_libbt.patch'
 'hardware/broadcom/wlan		hardware_broadcom_wlan.patch'
-'packages/apps/Mms		packages_apps_Mms.patch'
 'system/core			system_core.patch'
 'vendor/cm			vendor_cm.patch'
 )
