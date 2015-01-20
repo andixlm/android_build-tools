@@ -1,128 +1,7 @@
-From 61909fb93f956dfdca02b6d577480b95929692c8 Mon Sep 17 00:00:00 2001
-From: Pawit Pornkitprasan <p.pawit@gmail.com>
-Date: Fri, 16 Jan 2015 14:43:42 +0700
-Subject: [PATCH 01/10] StagefrightRecorder: move WAVE out off
- ENABLE_AV_ENHANCEMENTS
-
-- This can be used by all devices
-- .wav recording in our Sound Recorder needs this
-
-Change-Id: I8c19164de5c2a5dc8991bc148448d3516d3b6c49
----
- .../libmediaplayerservice/StagefrightRecorder.cpp  | 26 +++++++++++-----------
- media/libmediaplayerservice/StagefrightRecorder.h  |  2 +-
- 2 files changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
-index 3a8c163..e0766c3 100644
---- a/media/libmediaplayerservice/StagefrightRecorder.cpp
-+++ b/media/libmediaplayerservice/StagefrightRecorder.cpp
-@@ -44,6 +44,7 @@
- #include <media/stagefright/MediaCodecSource.h>
- #include <media/stagefright/OMXClient.h>
- #include <media/stagefright/OMXCodec.h>
-+#include <media/stagefright/WAVEWriter.h>
- #include <media/MediaProfiles.h>
- #include <camera/ICamera.h>
- #include <camera/CameraParameters.h>
-@@ -61,7 +62,6 @@
- #include <ExtendedUtils.h>
- #include <media/stagefright/ExtendedWriter.h>
- #include <media/stagefright/FMA2DPWriter.h>
--#include <media/stagefright/WAVEWriter.h>
- #include <QCMediaDefs.h>
- #endif
- 
-@@ -846,11 +846,11 @@ status_t StagefrightRecorder::prepareInternal() {
-         case OUTPUT_FORMAT_QCP:
-             status = setupExtendedRecording();
-             break;
-+#endif
- 
-         case OUTPUT_FORMAT_WAVE:
-             status = setupWAVERecording();
-             break;
--#endif
- 
-         default:
-             ALOGE("Unsupported output file format: %d", mOutputFormat);
-@@ -944,8 +944,8 @@ status_t StagefrightRecorder::start() {
-         case OUTPUT_FORMAT_MPEG2TS:
- #ifdef ENABLE_AV_ENHANCEMENTS
-         case OUTPUT_FORMAT_QCP:
--        case OUTPUT_FORMAT_WAVE:
- #endif
-+        case OUTPUT_FORMAT_WAVE:
-         {
-             status = mWriter->start();
-             break;
-@@ -1043,10 +1043,10 @@ sp<MediaSource> StagefrightRecorder::createAudioSource() {
-             format->setString("mime", MEDIA_MIMETYPE_AUDIO_AAC);
-             format->setInt32("aac-profile", OMX_AUDIO_AACObjectELD);
-             break;
--#ifdef ENABLE_AV_ENHANCEMENTS
-         case AUDIO_ENCODER_LPCM:
-             format->setString("mime", MEDIA_MIMETYPE_AUDIO_RAW);
-             break;
-+#ifdef ENABLE_AV_ENHANCEMENTS
-         case AUDIO_ENCODER_EVRC:
-             format->setString("mime", MEDIA_MIMETYPE_AUDIO_EVRC);
-             break;
-@@ -2126,15 +2126,6 @@ status_t StagefrightRecorder::setupFMA2DPWriter() {
-     return setupRawAudioRecording();
- }
- 
--status_t StagefrightRecorder::setupWAVERecording() {
--    CHECK(mOutputFormat == OUTPUT_FORMAT_WAVE);
--    CHECK(mAudioEncoder == AUDIO_ENCODER_LPCM);
--    CHECK(mAudioSource != AUDIO_SOURCE_CNT);
--
--    mWriter = new WAVEWriter(mOutputFd);
--    return setupRawAudioRecording();
--}
--
- status_t StagefrightRecorder::setupExtendedRecording() {
-     CHECK(mOutputFormat == OUTPUT_FORMAT_QCP);
- 
-@@ -2159,6 +2150,15 @@ status_t StagefrightRecorder::setupExtendedRecording() {
- }
- #endif
- 
-+status_t StagefrightRecorder::setupWAVERecording() {
-+    CHECK(mOutputFormat == OUTPUT_FORMAT_WAVE);
-+    CHECK(mAudioEncoder == AUDIO_ENCODER_LPCM);
-+    CHECK(mAudioSource != AUDIO_SOURCE_CNT);
-+
-+    mWriter = new WAVEWriter(mOutputFd);
-+    return setupRawAudioRecording();
-+}
-+
- status_t StagefrightRecorder::setSourcePause(bool pause) {
-     status_t err = OK;
-     if (pause) {
-diff --git a/media/libmediaplayerservice/StagefrightRecorder.h b/media/libmediaplayerservice/StagefrightRecorder.h
-index 4bd0395..527b645 100644
---- a/media/libmediaplayerservice/StagefrightRecorder.h
-+++ b/media/libmediaplayerservice/StagefrightRecorder.h
-@@ -205,9 +205,9 @@ private:
-     /* extension */
- #ifdef ENABLE_AV_ENHANCEMENTS
-     status_t setupFMA2DPWriter();
--    status_t setupWAVERecording();
-     status_t setupExtendedRecording();
- #endif
-+    status_t setupWAVERecording();
- };
- 
- }  // namespace android
--- 
-1.9.3 (Apple Git-50)
-
-
 From 5fc8e365be50197ced38ac2bddfe3850f4e47026 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 24 Apr 2013 11:37:19 +0700
-Subject: [PATCH 02/10] OMXCodec: Re-implement requires-flush-before-shutdown
+Subject: [PATCH 1/9] OMXCodec: Re-implement requires-flush-before-shutdown
  quirk
 
 Support is already there, but is not in the codec quirk reading list.
@@ -154,7 +33,7 @@ index 773c80b..e10e1e9 100644
 From 38987dc85b04609e2225338f6e4564609b21a409 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 17 Dec 2013 13:15:52 +0700
-Subject: [PATCH 03/10] OMXCodec: set default input buffer size
+Subject: [PATCH 2/9] OMXCodec: set default input buffer size
 
 Broadcom OMX only set the buffer size to 65536 by default which
 is not enough for higher bitrate video
@@ -221,7 +100,7 @@ index e10e1e9..2c23ddd 100644
 From 6a79e24ffad3082266bdf3459ecee70fecfff806 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 19 Nov 2014 20:33:58 +0700
-Subject: [PATCH 04/10] ACodec: skip port index checking on vc4 encoder
+Subject: [PATCH 3/9] ACodec: skip port index checking on vc4 encoder
 
 Change-Id: I3fe742a8ec4b7f9bc0c4e5f0825fd3b88965a95e
 ---
@@ -251,7 +130,7 @@ index c4c16c5..f565766 100644
 From c210fc15b04c57a750b00ccd106f6cee748ff1b2 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 23 Nov 2014 17:27:20 +0700
-Subject: [PATCH 05/10] ACodec: Don't trust provided width/height when setting
+Subject: [PATCH 4/9] ACodec: Don't trust provided width/height when setting
  input buffer size
 
 They are bogus
@@ -289,7 +168,7 @@ index f565766..f91a58b 100644
 From 63b9634b236cd055592f1fb6af9c0f5a531b39ec Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 28 Nov 2014 21:07:59 +0700
-Subject: [PATCH 06/10] AudioFlinger: i9082: HACK: disable stereo record
+Subject: [PATCH 5/9] AudioFlinger: i9082: HACK: disable stereo record
 
 Stereo record causes audio to speed up x2 for some reason.
 Record in mono and let AudioFlinger resample to stereo
@@ -324,7 +203,7 @@ index 0717e57..557e65a 100644
 From c1a816af8bcbc78714a84dbab4ca62154125ed30 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Wed, 10 Dec 2014 17:38:10 +0700
-Subject: [PATCH 07/10] AudioFlinger: i9082: HACK: force audio to 48 KHz
+Subject: [PATCH 6/9] AudioFlinger: i9082: HACK: force audio to 48 KHz
 
 Let surfaceflinger do all the resampling instead of the audio HAL
 
@@ -357,8 +236,7 @@ index 557e65a..3a3c16b 100644
 From c7d8141cd350dc961c5a0f72e0f0c1b257c7826c Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 16 Dec 2014 21:12:22 +0700
-Subject: [PATCH 08/10] stagefright: i9082: don't allocate too many extra
- buffers
+Subject: [PATCH 7/9] stagefright: i9082: don't allocate too many extra buffers
 
 Too many extra buffers (for a total of 8) causes random
 video freezes and freezes on rotation
@@ -408,7 +286,7 @@ index 2c23ddd..e47f49e 100644
 From 326b78fd90e102d3c0943c2de500f2f2cfa238cf Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 20 Dec 2014 19:09:59 +0700
-Subject: [PATCH 09/10] stagefright: CAPRI_HWC: fix for screen recording
+Subject: [PATCH 8/9] stagefright: CAPRI_HWC: fix for screen recording
 
 Change-Id: Ib8a677eb1ecabc30efe163faa9b209f4db966437
 ---
@@ -463,7 +341,7 @@ index 8c22255..eaa20c9 100644
 From 0a0f4e587d73683373af98202d66cb7b06e04c01 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 15:25:33 +0700
-Subject: [PATCH 10/10] stagefright: CAPRI_HWC: fix for miracast
+Subject: [PATCH 9/9] stagefright: CAPRI_HWC: fix for miracast
 
 Our encoder does not support OMX_Video_ControlRateConstant
 
