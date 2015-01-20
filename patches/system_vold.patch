@@ -1,0 +1,68 @@
+From 5170fb4a53945077a33c57fdf8239444d0705b61 Mon Sep 17 00:00:00 2001
+From: Pawit Pornkitprasan <p.pawit@gmail.com>
+Date: Mon, 19 Jan 2015 20:58:49 +0700
+Subject: [PATCH] vold: fix asec on ExFAT
+
+The ExFAT fuse driver doesn't implement dent->d_type, so we
+need to find the file type using lstat
+
+Change-Id: Ie4070bf77c61231ecb7cd62e39bd5ce8805b3896
+---
+ CommandListener.cpp | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
+
+diff --git a/CommandListener.cpp b/CommandListener.cpp
+index 2b47f31..4fa8e02 100644
+--- a/CommandListener.cpp
++++ b/CommandListener.cpp
+@@ -15,7 +15,9 @@
+  */
+ 
+ #include <stdlib.h>
++#include <sys/param.h>
+ #include <sys/socket.h>
++#include <sys/stat.h>
+ #include <sys/types.h>
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+@@ -322,8 +324,35 @@ void CommandListener::AsecCmd::listAsecsInDirectory(SocketClient *cli, const cha
+     while (!readdir_r(d, dent, &result) && result != NULL) {
+         if (dent->d_name[0] == '.')
+             continue;
+-        if (dent->d_type != DT_REG)
+-            continue;
++
++        if (dent->d_type != DT_UNKNOWN) {
++            if (dent->d_type != DT_REG)
++                continue;
++        } else {
++            // d_type is not guaranteed to be populated (e.g. ExFAT)
++            char path[MAXPATHLEN];
++            struct stat sb;
++
++            if (strlen(directory) + strlen(dent->d_name) + 2 > MAXPATHLEN) {
++                ALOGW("asec list: combined path length too long");
++                continue;
++            }
++
++            strcpy(path, directory);
++            strcat(path, "/");
++            strcat(path, dent->d_name);
++
++            if (lstat(path, &sb) < 0) {
++                ALOGW("asec list: error lstat on %s", path);
++                continue;
++            }
++
++            if (!S_ISREG(sb.st_mode)) {
++                // Not a regular file
++                continue;
++            }
++        }
++
+         size_t name_len = strlen(dent->d_name);
+         if (name_len > 5 && name_len < 260 &&
+                 !strcmp(&dent->d_name[name_len - 5], ".asec")) {
+-- 
+1.9.3 (Apple Git-50)
+
