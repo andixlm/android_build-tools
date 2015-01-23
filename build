@@ -7,6 +7,25 @@ cd ..
 
 export USE_CCACHE=1
 
+# Define functions
+function build_rom {
+	. build/envsetup.sh
+	breakfast $1
+	mka bacon
+}
+
+function build_boot {
+	. build/envsetup.sh
+	breakfast $1
+	mka bootimage
+}
+
+function build_recovery {
+	. build/envsetup.sh
+	breakfast $1
+	mka recoveryimage
+}
+
 # Check 1st option
 case "$1" in
 	i9105 )
@@ -62,14 +81,12 @@ if [[ $FAST && !($MM) ]]; then
 
 	# Build for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		brunch $DEVICE
+		build_rom $DEVICE
 
 	# Build for both devices
 	else
 		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			brunch $NAME
+			build_rom $NAME
 		done
 	fi
 
@@ -78,16 +95,12 @@ elif [[ $MB ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		breakfast $DEVICE
-		mka bootimage
+		build_boot $DEVICE
 
 	# Make it for both devices
 	else
 		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			breakfast $NAME
-			mka bootimage
+			build_boot $NAME
 		done
 	fi
 
@@ -96,16 +109,12 @@ elif [[ $MR ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		breakfast $DEVICE
-		mka recoveryimage
+		build_recovery $DEVICE
 
 	# Make it for both devices
 	else
 		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			breakfast $NAME
-			mka recoveryimage
+			build_recovery $NAME
 		done
 	fi
 fi
@@ -127,8 +136,7 @@ if [[ !($FAST) ]]; then
 		exit 0
 	fi
 
-	. build/envsetup.sh
-	brunch $DEVICE
+	build_rom
 fi
 
 # Calculate elapsed time
