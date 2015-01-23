@@ -17,7 +17,7 @@ case "$1" in
 		DEVICE=$1
 		FAST=1
 		;;
-	--both )
+	s2plus )
 		BOTH=1
 		DEVICE='i9105 i9105p'
 		FAST=1
