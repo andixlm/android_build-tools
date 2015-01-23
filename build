@@ -7,6 +7,25 @@ cd ..
 
 export USE_CCACHE=1
 
+# Define functions
+function build_rom {
+	. build/envsetup.sh
+	breakfast $1
+	mka bacon
+}
+
+function build_boot {
+	. build/envsetup.sh
+	breakfast $1
+	mka bootimage
+}
+
+function build_recovery {
+	. build/envsetup.sh
+	breakfast $1
+	mka recoveryimage
+}
+
 # Check 1st option
 case "$1" in
 	i9105 )
@@ -17,7 +36,7 @@ case "$1" in
 		DEVICE=$1
 		FAST=1
 		;;
-	--both )
+	s2plus )
 		BOTH=1
 		DEVICE='i9105 i9105p'
 		FAST=1
@@ -34,15 +53,15 @@ esac
 if [[ $FAST ]]; then
 	case "$2" in
 		-b|--make-boot )
-			MB=1
-			MM=1
+			BOOT=1
+			MORE=1
 			;;
 		-r|--make-recovery )
-			MR=1
-			MM=1
+			RECOVERY=1
+			MORE=1
 			;;
 		-c|--make-clean )
-			MC=1
+			CLEAN=1
 			;;
 		"" )
 			;;
@@ -53,59 +72,49 @@ if [[ $FAST ]]; then
 fi
 
 # Fast building if options used
-if [[ $FAST && !($MM) ]]; then
+if [[ $FAST && !($MORE) ]]; then
 
 	# Clean if needed
-	if [[ $MC ]]; then
+	if [[ $CLEAN ]]; then
 		make clean
 	fi
 
 	# Build for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		brunch $DEVICE
+		build_rom $DEVICE
 
 	# Build for both devices
 	else
-		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			brunch $NAME
+		for DNAME in $DEVICE; do
+			build_rom $DNAME
 		done
 	fi
 
 # Make boot image
-elif [[ $MB ]]; then
+elif [[ $BOOT ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		breakfast $DEVICE
-		mka bootimage
+		build_boot $DEVICE
 
 	# Make it for both devices
 	else
-		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			breakfast $NAME
-			mka bootimage
+		for DNAME in $DEVICE; do
+			build_boot $DNAME
 		done
 	fi
 
 # Make recovery image
-elif [[ $MR ]]; then
+elif [[ $RECOVERY ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
-		. build/envsetup.sh
-		breakfast $DEVICE
-		mka recoveryimage
+		build_recovery $DEVICE
 
 	# Make it for both devices
 	else
-		for NAME in $DEVICE; do
-			. build/envsetup.sh
-			breakfast $NAME
-			mka recoveryimage
+		for DNAME in $DEVICE; do
+			build_recovery $DNAME
 		done
 	fi
 fi
@@ -121,14 +130,13 @@ if [[ !($FAST) ]]; then
 
 	echo -n 'Device? (i9105 or i9105p): '
 	read DEVICE
-	# Check if given proper device name
+	# Check if given proper device DNAME
 	if [[ $DEVICE != i9105 && $DEVICE != i9105p ]]; then
-		echo Unknown device name: $DEVICE
+		echo Unknown device DNAME: $DEVICE
 		exit 0
 	fi
 
-	. build/envsetup.sh
-	brunch $DEVICE
+	build_rom
 fi
 
 # Calculate elapsed time
@@ -141,6 +149,6 @@ secs=$(($tdiff % 60))
 # Print elapsed time
 tput setaf 2
 echo ""
-printf "#### TOTAL TIME ELAPSED %02g:%02g:%02g (hh:mm:ss) ####" $hours $mins $secs
+printf "Elapsed time: %02g:%02g:%02g" $hours $mins $secs
 echo ""
 tput sgr0
