@@ -53,15 +53,15 @@ esac
 if [[ $FAST ]]; then
 	case "$2" in
 		-b|--make-boot )
-			MB=1
-			MM=1
+			BOOT=1
+			MORE=1
 			;;
 		-r|--make-recovery )
-			MR=1
-			MM=1
+			RECOVERY=1
+			MORE=1
 			;;
 		-c|--make-clean )
-			MC=1
+			CLEAN=1
 			;;
 		"" )
 			;;
@@ -72,10 +72,10 @@ if [[ $FAST ]]; then
 fi
 
 # Fast building if options used
-if [[ $FAST && !($MM) ]]; then
+if [[ $FAST && !($MORE) ]]; then
 
 	# Clean if needed
-	if [[ $MC ]]; then
+	if [[ $CLEAN ]]; then
 		make clean
 	fi
 
@@ -85,13 +85,13 @@ if [[ $FAST && !($MM) ]]; then
 
 	# Build for both devices
 	else
-		for NAME in $DEVICE; do
-			build_rom $NAME
+		for DNAME in $DEVICE; do
+			build_rom $DNAME
 		done
 	fi
 
 # Make boot image
-elif [[ $MB ]]; then
+elif [[ $BOOT ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
@@ -99,13 +99,13 @@ elif [[ $MB ]]; then
 
 	# Make it for both devices
 	else
-		for NAME in $DEVICE; do
-			build_boot $NAME
+		for DNAME in $DEVICE; do
+			build_boot $DNAME
 		done
 	fi
 
 # Make recovery image
-elif [[ $MR ]]; then
+elif [[ $RECOVERY ]]; then
 
 	# Make it for only device
 	if [[ !($BOTH) ]]; then
@@ -113,8 +113,8 @@ elif [[ $MR ]]; then
 
 	# Make it for both devices
 	else
-		for NAME in $DEVICE; do
-			build_recovery $NAME
+		for DNAME in $DEVICE; do
+			build_recovery $DNAME
 		done
 	fi
 fi
@@ -130,9 +130,9 @@ if [[ !($FAST) ]]; then
 
 	echo -n 'Device? (i9105 or i9105p): '
 	read DEVICE
-	# Check if given proper device name
+	# Check if given proper device DNAME
 	if [[ $DEVICE != i9105 && $DEVICE != i9105p ]]; then
-		echo Unknown device name: $DEVICE
+		echo Unknown device DNAME: $DEVICE
 		exit 0
 	fi
 
