@@ -1,25 +1,25 @@
-From 1e8407cdf88e4d5ecd9765950f2b9cc7fb9c940d Mon Sep 17 00:00:00 2001
+From a2e24c02c8de1c8d2ad51a55d94e93e99615e4ac Mon Sep 17 00:00:00 2001
 From: andixlm <andixev@gmail.com>
-Date: Wed, 31 Dec 2014 19:25:15 +0500
+Date: Sat, 24 Jan 2015 18:18:09 +0500
 Subject: [PATCH] Remove CMUpdater package
 
-Change-Id: I7f27d1de2f60740cfb9e837ccd4bcf571d23b43b
+Change-Id: Icfd0785ded840df8ce05ac231a507e40d4e62c07
 ---
  config/common.mk | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/config/common.mk b/config/common.mk
-index 2a87112..09afab6 100644
+index e3a5228..815b9c5 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -145,7 +145,6 @@ PRODUCT_PACKAGES += \
+@@ -146,7 +146,6 @@ PRODUCT_PACKAGES += \
      CMFileManager \
      Eleven \
      LockClock \
 -    CMUpdater \
      CMAccount \
-     CMHome
- 
+     CMHome \
+     CyanogenSetupWizard
 -- 
-2.1.3
+2.1.4
 
