@@ -12,7 +12,6 @@ PATCHES=(
 'frameworks/opt/telephony	frameworks_opt_telephony.patch'
 'hardware/broadcom/libbt	hardware_broadcom_libbt.patch'
 'system/core			system_core.patch'
-'system/vold			system_vold.patch'
 'vendor/cm			vendor_cm.patch'
 )
 
