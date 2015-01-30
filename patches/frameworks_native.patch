@@ -126,7 +126,7 @@ index 6ec4f23..40d0c81 100644
      sp<ISurfaceComposer> s(ComposerService::getComposerService());
      if (s == NULL) return NO_INIT;
 -#ifdef USE_MHEAP_SCREENSHOT
-+#if defined(SE_MHEAP_SCREENSHOT) && !defined(CAPRI_HWC)
++#if defined(USE_MHEAP_SCREENSHOT) && !defined(CAPRI_HWC)
      int format = 0;
      producer->query(NATIVE_WINDOW_FORMAT,&format);
      if (format == PIXEL_FORMAT_RGBA_8888) {
