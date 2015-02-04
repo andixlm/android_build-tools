@@ -6,6 +6,7 @@ COUNT=0
 CURRENT_DIR="$PWD"
 PD="build_tools/patches"
 PATCHES=(
+'bootable/recovery		bootable_recovery.patch'
 'frameworks/av			frameworks_av.patch'
 'frameworks/base		frameworks_base.patch'
 'frameworks/native		frameworks_native.patch'
