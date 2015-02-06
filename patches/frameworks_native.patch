@@ -1,4 +1,4 @@
-From 69c45503530be826331201266bfcca2a1d53d0d8 Mon Sep 17 00:00:00 2001
+From 1e1978aec5ff3d4203a1c2c24b22f162c5fe2fee Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Thu, 14 Nov 2013 15:19:46 +0700
 Subject: [PATCH 1/5] binder: add compat symbol
@@ -29,7 +29,7 @@ index dd04dcf..9ec2380 100644
 1.9.3 (Apple Git-50)
 
 
-From 3c1c8fbd65d49a66b49065b6d5d335bdc9bd67df Mon Sep 17 00:00:00 2001
+From a483196aff5f095052cca7f28a207150b78f8f17 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 10 Dec 2013 19:38:17 +0700
 Subject: [PATCH 2/5] binder: add compat symbols
@@ -75,7 +75,7 @@ index 1dbb06f..8b36a54 100644
 1.9.3 (Apple Git-50)
 
 
-From 002881b6470aafc2fa12aa9ae0156f37736bb2cb Mon Sep 17 00:00:00 2001
+From 0e356617a33dc37e541207c9c15c14d7367e46b2 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Mon, 16 Dec 2013 15:45:42 +0700
 Subject: [PATCH 3/5] sf: CAPRI_HWC: fix rotation artifact
@@ -85,10 +85,10 @@ Subject: [PATCH 3/5] sf: CAPRI_HWC: fix rotation artifact
  1 file changed, 5 insertions(+)
 
 diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
-index 3717ffd..7f5bd6b 100644
+index 3997d77..2d74b89 100644
 --- a/services/surfaceflinger/SurfaceFlinger.cpp
 +++ b/services/surfaceflinger/SurfaceFlinger.cpp
-@@ -3651,6 +3651,11 @@ status_t SurfaceFlinger::captureScreenImplLocked(
+@@ -3730,6 +3730,11 @@ status_t SurfaceFlinger::captureScreenImplLocked(
  {
      ATRACE_CALL();
  
@@ -104,7 +104,7 @@ index 3717ffd..7f5bd6b 100644
 1.9.3 (Apple Git-50)
 
 
-From 694378747a9866c6daab4ec315b4e8f760003f54 Mon Sep 17 00:00:00 2001
+From 22758b3e025c564d8a231446b90132cdd50296fa Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Mon, 15 Dec 2014 23:12:44 +0700
 Subject: [PATCH 4/5] SurfaceComposerClient: don't block RGBA_8888 for
@@ -118,10 +118,10 @@ Change-Id: Ie7d549bb63e11380d7efcab27b7e4d9f3eb2a1fe
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/libs/gui/SurfaceComposerClient.cpp b/libs/gui/SurfaceComposerClient.cpp
-index 6ec4f23..40d0c81 100644
+index 59787bf..73d35e8 100644
 --- a/libs/gui/SurfaceComposerClient.cpp
 +++ b/libs/gui/SurfaceComposerClient.cpp
-@@ -700,7 +700,7 @@ status_t ScreenshotClient::capture(
+@@ -768,7 +768,7 @@ status_t ScreenshotClient::capture(
          uint32_t minLayerZ, uint32_t maxLayerZ, bool useIdentityTransform) {
      sp<ISurfaceComposer> s(ComposerService::getComposerService());
      if (s == NULL) return NO_INIT;
@@ -134,7 +134,7 @@ index 6ec4f23..40d0c81 100644
 1.9.3 (Apple Git-50)
 
 
-From c9c7fd1f7970bba2ace5f83b693193a291fc290b Mon Sep 17 00:00:00 2001
+From 0cf774bc3f53692737baefca4a00a5c32a685478 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 20 Dec 2014 19:09:27 +0700
 Subject: [PATCH 5/5] sf: CAPRI_HWC: fix for screen recording
@@ -163,4 +163,3 @@ index f152b65..3b2fd0a 100644
                          "(dequeued=%d undequeued=%d)",
 -- 
 1.9.3 (Apple Git-50)
-

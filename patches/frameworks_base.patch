@@ -58,7 +58,7 @@ index d461bca..a34a758 100644
 1.9.3 (Apple Git-50)
 
 
-From 8f4f6f4b27a828c00342dbf3433d7b0eeb1b4cfb Mon Sep 17 00:00:00 2001
+From 727a6efc4e281bed9cf20969a6e99cc75f374825 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 16:23:31 +0700
 Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
@@ -72,7 +72,7 @@ Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index 3cb2261..b320910 100644
+index 9ce2725..b2bc461 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
 @@ -240,6 +240,7 @@ public final class PowerManagerService extends SystemService
@@ -83,7 +83,7 @@ index 3cb2261..b320910 100644
  
      // Timestamp of last interactive power hint.
      private long mLastInteractivePowerHintTime;
-@@ -1128,6 +1129,11 @@ public final class PowerManagerService extends SystemService
+@@ -1134,6 +1135,11 @@ public final class PowerManagerService extends SystemService
                      return true;
                  }
              } else {
@@ -95,7 +95,7 @@ index 3cb2261..b320910 100644
                  if (eventTime > mLastUserActivityTime) {
                      mLastUserActivityTime = eventTime;
                      mDirty |= DIRTY_USER_ACTIVITY;
-@@ -1628,7 +1634,7 @@ public final class PowerManagerService extends SystemService
+@@ -1634,7 +1640,7 @@ public final class PowerManagerService extends SystemService
                          }
  
                          mKeyboardLight.setBrightness(mKeyboardVisible ? keyboardBrightness : 0);
@@ -106,4 +106,3 @@ index 3cb2261..b320910 100644
                              mButtonsLight.setBrightness(buttonBrightness);
 -- 
 1.9.3 (Apple Git-50)
-

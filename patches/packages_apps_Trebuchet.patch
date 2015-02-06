@@ -129,4 +129,3 @@ index 1494311..d2a5ff7 100644
          mMinHeight = dpiFromPx(minHeightPx, dm);
 -- 
 1.9.3 (Apple Git-50)
-

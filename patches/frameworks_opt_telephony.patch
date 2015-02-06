@@ -1,4 +1,4 @@
-From 7013bc0842bb45013e340feefe24ca5b035506cb Mon Sep 17 00:00:00 2001
+From 78762af7e45286c38732666bea4e7645f64f6daa Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 31 May 2014 12:34:56 +0700
 Subject: [PATCH] telephony: support for RIL that does not send
@@ -14,10 +14,10 @@ Change-Id: Ib7373d32777f6c42ee488972a7aa63ae8e1cd09b
  1 file changed, 19 insertions(+)
 
 diff --git a/src/java/com/android/internal/telephony/PhoneBase.java b/src/java/com/android/internal/telephony/PhoneBase.java
-index a021997..67053bd 100644
+index 5c70922..f4888ee 100644
 --- a/src/java/com/android/internal/telephony/PhoneBase.java
 +++ b/src/java/com/android/internal/telephony/PhoneBase.java
-@@ -201,6 +201,7 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -205,6 +205,7 @@ public abstract class PhoneBase extends Handler implements Phone {
      boolean mDnsCheckDisabled;
      public DcTrackerBase mDcTracker;
      boolean mDoesRilSendMultipleCallRing;
@@ -25,7 +25,7 @@ index a021997..67053bd 100644
      int mCallRingContinueToken;
      int mCallRingDelay;
      public boolean mIsTheCurrentActivePhone = true;
-@@ -413,6 +414,11 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -421,6 +422,11 @@ public abstract class PhoneBase extends Handler implements Phone {
                  TelephonyProperties.PROPERTY_RIL_SENDS_MULTIPLE_CALL_RING, true);
          Rlog.d(LOG_TAG, "mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
  
@@ -37,7 +37,7 @@ index a021997..67053bd 100644
          mCallRingDelay = SystemProperties.getInt(
                  TelephonyProperties.PROPERTY_CALL_RING_DELAY, 3000);
          Rlog.d(LOG_TAG, "mCallRingDelay=" + mCallRingDelay);
-@@ -1725,6 +1731,18 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -1771,6 +1777,18 @@ public abstract class PhoneBase extends Handler implements Phone {
      public void notifyNewRingingConnectionP(Connection cn) {
          if (!mIsVoiceCapable)
              return;
@@ -56,7 +56,7 @@ index a021997..67053bd 100644
          AsyncResult ar = new AsyncResult(null, cn, null);
          mNewRingingConnectionRegistrants.notifyRegistrants(ar);
      }
-@@ -1968,6 +1986,7 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -2039,6 +2057,7 @@ public abstract class PhoneBase extends Handler implements Phone {
          pw.println(" mDnsCheckDisabled=" + mDnsCheckDisabled);
          pw.println(" mDcTracker=" + mDcTracker);
          pw.println(" mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
@@ -66,4 +66,3 @@ index a021997..67053bd 100644
          pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
 -- 
 1.9.3 (Apple Git-50)
-

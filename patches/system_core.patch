@@ -1,7 +1,7 @@
-From 421240d9927bb8c3b5f80e25f2b15534fdba6ec5 Mon Sep 17 00:00:00 2001
+From 73b9cc87994bb053b65c68751020806ea51ecfd1 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 12 Apr 2013 11:40:15 +0700
-Subject: [PATCH 1/2] libnetutils: add ifc_set_mtu
+Subject: [PATCH] libnetutils: add ifc_set_mtu
 
 Change-Id: I3031e9ee38583648350f2c46baa7a9a714b9ea1e
 ---
@@ -34,4 +34,3 @@ index d9c50ab..2394f9d 100644
 +}
 -- 
 1.9.3 (Apple Git-50)
-
