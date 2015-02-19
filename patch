@@ -4,7 +4,7 @@ cd ..
 
 COUNT=0
 CURRENT_DIR="$PWD"
-PD="build_tools/patches"
+PD="build-tools/patches"
 PATCHES=(
 'bootable/recovery		bootable_recovery.patch'
 'frameworks/av			frameworks_av.patch'
