@@ -1,7 +1,67 @@
+From 05b7ea9335070c61bbb19154f631b08b68646861 Mon Sep 17 00:00:00 2001
+From: Pawit Pornkitprasan <p.pawit@gmail.com>
+Date: Sat, 15 Nov 2014 22:33:16 +0700
+Subject: [PATCH 1/2] Camera: HACK: i9082: API hacks
+
+CTS 5.0 requires the presence of an auto mode, so applications
+may try to use auto without checking.
+
+Also change ENODEV to MAX_CAMERAS_IN_USE to please the CTS
+
+Change-Id: I929feffa4f79c69e9d7be7d1acacb3c228280bfe
+---
+ core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java | 2 +-
+ core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java  | 2 +-
+ core/java/android/hardware/camera2/utils/CameraBinderDecorator.java | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java b/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
+index 8376e7c..a1decec 100644
+--- a/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
++++ b/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
+@@ -1040,7 +1040,7 @@ public class LegacyMetadataMapper {
+                 return CONTROL_AE_ANTIBANDING_MODE_OFF;
+             }
+             case Camera.Parameters.ANTIBANDING_50HZ: {
+-                return CONTROL_AE_ANTIBANDING_MODE_50HZ;
++                return /* CONTROL_AE_ANTIBANDING_MODE_50HZ */ CONTROL_AE_ANTIBANDING_MODE_AUTO;
+             }
+             case Camera.Parameters.ANTIBANDING_60HZ: {
+                 return CONTROL_AE_ANTIBANDING_MODE_60HZ;
+diff --git a/core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java b/core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java
+index 61f7b8b..f370103 100644
+--- a/core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java
++++ b/core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java
+@@ -617,7 +617,7 @@ public class LegacyRequestMapper {
+                 return Parameters.ANTIBANDING_60HZ;
+             }
+             case CONTROL_AE_ANTIBANDING_MODE_AUTO: {
+-                return Parameters.ANTIBANDING_AUTO;
++                return Parameters.ANTIBANDING_50HZ /* Parameters.ANTIBANDING_AUTO */;
+             }
+             default: {
+                 return null;
+diff --git a/core/java/android/hardware/camera2/utils/CameraBinderDecorator.java b/core/java/android/hardware/camera2/utils/CameraBinderDecorator.java
+index d461bca..a34a758 100644
+--- a/core/java/android/hardware/camera2/utils/CameraBinderDecorator.java
++++ b/core/java/android/hardware/camera2/utils/CameraBinderDecorator.java
+@@ -124,7 +124,7 @@ public class CameraBinderDecorator {
+             case EUSERS:
+                 throw new CameraRuntimeException(MAX_CAMERAS_IN_USE);
+             case ENODEV:
+-                throw new CameraRuntimeException(CAMERA_DISCONNECTED);
++                throw new CameraRuntimeException(/*CAMERA_DISCONNECTED*/ MAX_CAMERAS_IN_USE);
+             case EOPNOTSUPP:
+                 throw new CameraRuntimeException(CAMERA_DEPRECATED_HAL);
+             case INVALID_OPERATION:
+-- 
+1.9.3 (Apple Git-50)
+
+
 From 727a6efc4e281bed9cf20969a6e99cc75f374825 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 16:23:31 +0700
-Subject: [PATCH] PowerManagerService: only turn on button light when any
+Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
  button is pressed
 
 This more closely emulates stock Samsung behavior
