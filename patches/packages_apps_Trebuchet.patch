@@ -1,4 +1,4 @@
-From f334a6d825df5e18f3475a0c8a84cc43d3e406bb Mon Sep 17 00:00:00 2001
+From a9f99c67e236fe35ef6359527e4348f1261eab27 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 1 Feb 2015 15:26:48 +0700
 Subject: [PATCH 1/2] Revert "DynamicGrid: tuning the icon size for some
@@ -35,10 +35,10 @@ index 779a5a6..1494311 100644
          // The tablet profile is odd in that the landscape orientation
          // also includes the nav bar on the side
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From 5aa1a04b0e86262f0b71715027e1dd0dbf0447e1 Mon Sep 17 00:00:00 2001
+From 7d0e7a3639c58c967fe14c2f915610288fa5c9f8 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 1 Feb 2015 15:26:50 +0700
 Subject: [PATCH 2/2] Revert "Update Larger icons setting for better usability"
@@ -128,4 +128,4 @@ index 1494311..d2a5ff7 100644
          mMinWidth = dpiFromPx(minWidthPx, dm);
          mMinHeight = dpiFromPx(minHeightPx, dm);
 -- 
-1.9.3 (Apple Git-50)
+1.9.1

@@ -1,4 +1,4 @@
-From 1e1978aec5ff3d4203a1c2c24b22f162c5fe2fee Mon Sep 17 00:00:00 2001
+From 06a95c91816d81f89c7b939678f5a43e10b94b0e Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Thu, 14 Nov 2013 15:19:46 +0700
 Subject: [PATCH 1/5] binder: add compat symbol
@@ -26,10 +26,10 @@ index dd04dcf..9ec2380 100644
  {
      return mCallingPid;
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From a483196aff5f095052cca7f28a207150b78f8f17 Mon Sep 17 00:00:00 2001
+From 618836db92ebb800d870c190ce90795496c6be5e Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 10 Dec 2013 19:38:17 +0700
 Subject: [PATCH 2/5] binder: add compat symbols
@@ -42,10 +42,10 @@ Change-Id: I059e92f19e4c5a911d38faa9c4df549c75c90761
  1 file changed, 12 insertions(+)
 
 diff --git a/libs/binder/Parcel.cpp b/libs/binder/Parcel.cpp
-index 1dbb06f..8b36a54 100644
+index e7589b1..b34ceb9 100644
 --- a/libs/binder/Parcel.cpp
 +++ b/libs/binder/Parcel.cpp
-@@ -875,6 +875,12 @@ status_t Parcel::writeBlob(size_t len, WritableBlob* outBlob)
+@@ -873,6 +873,12 @@ status_t Parcel::writeBlob(size_t len, WritableBlob* outBlob)
      return status;
  }
  
@@ -58,7 +58,7 @@ index 1dbb06f..8b36a54 100644
  status_t Parcel::write(const FlattenableHelperInterface& val)
  {
      status_t err;
-@@ -1287,6 +1293,12 @@ status_t Parcel::readBlob(size_t len, ReadableBlob* outBlob) const
+@@ -1285,6 +1291,12 @@ status_t Parcel::readBlob(size_t len, ReadableBlob* outBlob) const
      return NO_ERROR;
  }
  
@@ -72,10 +72,10 @@ index 1dbb06f..8b36a54 100644
  {
      // size
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From 0e356617a33dc37e541207c9c15c14d7367e46b2 Mon Sep 17 00:00:00 2001
+From 0325983656a05e1817ed12df3446cb851619375c Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Mon, 16 Dec 2013 15:45:42 +0700
 Subject: [PATCH 3/5] sf: CAPRI_HWC: fix rotation artifact
@@ -85,10 +85,10 @@ Subject: [PATCH 3/5] sf: CAPRI_HWC: fix rotation artifact
  1 file changed, 5 insertions(+)
 
 diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
-index 3997d77..2d74b89 100644
+index dfe5754..c608397 100644
 --- a/services/surfaceflinger/SurfaceFlinger.cpp
 +++ b/services/surfaceflinger/SurfaceFlinger.cpp
-@@ -3730,6 +3730,11 @@ status_t SurfaceFlinger::captureScreenImplLocked(
+@@ -3749,6 +3749,11 @@ status_t SurfaceFlinger::captureScreenImplLocked(
  {
      ATRACE_CALL();
  
@@ -101,10 +101,10 @@ index 3997d77..2d74b89 100644
      const uint32_t hw_w = hw->getWidth();
      const uint32_t hw_h = hw->getHeight();
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From 22758b3e025c564d8a231446b90132cdd50296fa Mon Sep 17 00:00:00 2001
+From 476c6ee94d64c2469efcdb45a2c022e710dac35b Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Mon, 15 Dec 2014 23:12:44 +0700
 Subject: [PATCH 4/5] SurfaceComposerClient: don't block RGBA_8888 for
@@ -118,23 +118,23 @@ Change-Id: Ie7d549bb63e11380d7efcab27b7e4d9f3eb2a1fe
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/libs/gui/SurfaceComposerClient.cpp b/libs/gui/SurfaceComposerClient.cpp
-index 59787bf..73d35e8 100644
+index b6025f2..9c59ba2 100644
 --- a/libs/gui/SurfaceComposerClient.cpp
 +++ b/libs/gui/SurfaceComposerClient.cpp
-@@ -768,7 +768,7 @@ status_t ScreenshotClient::capture(
+@@ -838,7 +838,7 @@ status_t ScreenshotClient::capture(
          uint32_t minLayerZ, uint32_t maxLayerZ, bool useIdentityTransform) {
      sp<ISurfaceComposer> s(ComposerService::getComposerService());
      if (s == NULL) return NO_INIT;
 -#ifdef USE_MHEAP_SCREENSHOT
-+#if defined(USE_MHEAP_SCREENSHOT) && !defined(CAPRI_HWC)
++#if defined(SE_MHEAP_SCREENSHOT) && !defined(CAPRI_HWC)
      int format = 0;
      producer->query(NATIVE_WINDOW_FORMAT,&format);
      if (format == PIXEL_FORMAT_RGBA_8888) {
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From 0cf774bc3f53692737baefca4a00a5c32a685478 Mon Sep 17 00:00:00 2001
+From ff83dc2393d1fedc903b78aef1d6a56c990b086a Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 20 Dec 2014 19:09:27 +0700
 Subject: [PATCH 5/5] sf: CAPRI_HWC: fix for screen recording
@@ -145,10 +145,10 @@ Change-Id: I6c7e59400eab86bc5ec0ffebbcc475fa0fa404d2
  1 file changed, 5 insertions(+)
 
 diff --git a/libs/gui/BufferQueueProducer.cpp b/libs/gui/BufferQueueProducer.cpp
-index f152b65..3b2fd0a 100644
+index 6f76019..ff6a570 100644
 --- a/libs/gui/BufferQueueProducer.cpp
 +++ b/libs/gui/BufferQueueProducer.cpp
-@@ -199,7 +199,12 @@ status_t BufferQueueProducer::waitForFreeSlotThenRelock(const char* caller,
+@@ -204,7 +204,12 @@ status_t BufferQueueProducer::waitForFreeSlotThenRelock(const char* caller,
              const int newUndequeuedCount =
                  maxBufferCount - (dequeuedCount + 1);
              const int minUndequeuedCount =
@@ -162,4 +162,4 @@ index f152b65..3b2fd0a 100644
                  BQ_LOGE("%s: min undequeued buffer count (%d) exceeded "
                          "(dequeued=%d undequeued=%d)",
 -- 
-1.9.3 (Apple Git-50)
+1.9.1

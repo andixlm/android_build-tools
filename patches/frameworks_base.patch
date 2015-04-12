@@ -1,4 +1,4 @@
-From 05b7ea9335070c61bbb19154f631b08b68646861 Mon Sep 17 00:00:00 2001
+From cecfcff89d52c6a27d6a9ec609fdf0ee391890cc Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 22:33:16 +0700
 Subject: [PATCH 1/2] Camera: HACK: i9082: API hacks
@@ -16,10 +16,10 @@ Change-Id: I929feffa4f79c69e9d7be7d1acacb3c228280bfe
  3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java b/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
-index 8376e7c..a1decec 100644
+index 347db05..5acf583d 100644
 --- a/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
 +++ b/core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java
-@@ -1040,7 +1040,7 @@ public class LegacyMetadataMapper {
+@@ -1100,7 +1100,7 @@ public class LegacyMetadataMapper {
                  return CONTROL_AE_ANTIBANDING_MODE_OFF;
              }
              case Camera.Parameters.ANTIBANDING_50HZ: {
@@ -55,10 +55,10 @@ index d461bca..a34a758 100644
                  throw new CameraRuntimeException(CAMERA_DEPRECATED_HAL);
              case INVALID_OPERATION:
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
 
 
-From 727a6efc4e281bed9cf20969a6e99cc75f374825 Mon Sep 17 00:00:00 2001
+From 516f9356aed2712605a3b0f26837be941e9837c5 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 16:23:31 +0700
 Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
@@ -72,10 +72,10 @@ Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index 9ce2725..b2bc461 100644
+index cd5baa8..5002726 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
-@@ -240,6 +240,7 @@ public final class PowerManagerService extends SystemService
+@@ -235,6 +235,7 @@ public final class PowerManagerService extends SystemService
      // Timestamp of the last call to user activity.
      private long mLastUserActivityTime;
      private long mLastUserActivityTimeNoChangeLights;
@@ -83,7 +83,7 @@ index 9ce2725..b2bc461 100644
  
      // Timestamp of last interactive power hint.
      private long mLastInteractivePowerHintTime;
-@@ -1134,6 +1135,11 @@ public final class PowerManagerService extends SystemService
+@@ -1145,6 +1146,11 @@ public final class PowerManagerService extends SystemService
                      return true;
                  }
              } else {
@@ -95,7 +95,7 @@ index 9ce2725..b2bc461 100644
                  if (eventTime > mLastUserActivityTime) {
                      mLastUserActivityTime = eventTime;
                      mDirty |= DIRTY_USER_ACTIVITY;
-@@ -1634,7 +1640,7 @@ public final class PowerManagerService extends SystemService
+@@ -1644,7 +1650,7 @@ public final class PowerManagerService extends SystemService
                          }
  
                          mKeyboardLight.setBrightness(mKeyboardVisible ? keyboardBrightness : 0);
@@ -105,4 +105,4 @@ index 9ce2725..b2bc461 100644
                          } else {
                              mButtonsLight.setBrightness(buttonBrightness);
 -- 
-1.9.3 (Apple Git-50)
+1.9.1

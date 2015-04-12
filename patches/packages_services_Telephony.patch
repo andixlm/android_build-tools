@@ -1,4 +1,4 @@
-From 91f8fc340e536a618e25990969851c5699bdfbb6 Mon Sep 17 00:00:00 2001
+From 7cd091321568a4b24b82ed4d55bb459f8e91ae03 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 20 Feb 2015 20:26:52 +0700
 Subject: [PATCH] Telephony: HACK: enable WCDMA only setting
@@ -12,10 +12,10 @@ Change-Id: If552c6439f7b6910422ec5549e54e68da798c82e
  2 files changed, 18 insertions(+), 5 deletions(-)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index dbd4d60..c57be68 100644
+index 6aa2eec..f6a82d4 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -607,12 +607,14 @@
+@@ -609,12 +609,14 @@
      </string-array>
  
      <string-array name="enabled_networks_except_lte_choices" translatable="false">
@@ -34,10 +34,10 @@ index dbd4d60..c57be68 100644
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff --git a/src/com/android/phone/MobileNetworkSettings.java b/src/com/android/phone/MobileNetworkSettings.java
-index c7b948c..7b46591 100644
+index 4103111..3bda06e 100644
 --- a/src/com/android/phone/MobileNetworkSettings.java
 +++ b/src/com/android/phone/MobileNetworkSettings.java
-@@ -484,6 +484,7 @@ public class MobileNetworkSettings extends PreferenceActivity
+@@ -523,6 +523,7 @@ public class MobileNetworkSettings extends PreferenceActivity
                  switch (buttonNetworkMode) {
                      case Phone.NT_MODE_WCDMA_PREF:
                      case Phone.NT_MODE_GSM_ONLY:
@@ -45,7 +45,7 @@ index c7b948c..7b46591 100644
                      case Phone.NT_MODE_LTE_GSM_WCDMA:
                      case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
                      case Phone.NT_MODE_CDMA:
-@@ -815,12 +816,22 @@ public class MobileNetworkSettings extends PreferenceActivity
+@@ -901,12 +902,22 @@ public class MobileNetworkSettings extends PreferenceActivity
      private void UpdateEnabledNetworksValueAndSummary(int NetworkMode) {
          switch (NetworkMode) {
              case Phone.NT_MODE_WCDMA_ONLY:
@@ -69,7 +69,7 @@ index c7b948c..7b46591 100644
                  } else {
                      mButtonEnabledNetworks.setValue(
                              Integer.toString(Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA));
-@@ -831,7 +842,7 @@ public class MobileNetworkSettings extends PreferenceActivity
+@@ -917,7 +928,7 @@ public class MobileNetworkSettings extends PreferenceActivity
                  if (!mIsGlobalCdma) {
                      mButtonEnabledNetworks.setValue(
                              Integer.toString(Phone.NT_MODE_GSM_ONLY));
@@ -79,4 +79,4 @@ index c7b948c..7b46591 100644
                      mButtonEnabledNetworks.setValue(
                              Integer.toString(Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA));
 -- 
-1.9.3 (Apple Git-50)
+1.9.1
