@@ -1,4 +1,4 @@
-From cecfcff89d52c6a27d6a9ec609fdf0ee391890cc Mon Sep 17 00:00:00 2001
+From 364bda5654561df326c7e13c5edf833a6140e278 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 15 Nov 2014 22:33:16 +0700
 Subject: [PATCH 1/2] Camera: HACK: i9082: API hacks
@@ -55,10 +55,10 @@ index d461bca..a34a758 100644
                  throw new CameraRuntimeException(CAMERA_DEPRECATED_HAL);
              case INVALID_OPERATION:
 -- 
-1.9.1
+2.3.5
 
 
-From 516f9356aed2712605a3b0f26837be941e9837c5 Mon Sep 17 00:00:00 2001
+From cc384f5009f85e3b11ecb7ace018bacf5f301319 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 16:23:31 +0700
 Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
@@ -105,4 +105,4 @@ index cd5baa8..5002726 100644
                          } else {
                              mButtonsLight.setBrightness(buttonBrightness);
 -- 
-1.9.1
+2.3.5

@@ -1,4 +1,4 @@
-From 8773072f4d193e99eb2d13f15a152c3bfb4116dc Mon Sep 17 00:00:00 2001
+From 8ca768b45b5dc49b2df99421f39cc372e5d1361b Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 31 May 2014 12:34:56 +0700
 Subject: [PATCH] telephony: support for RIL that does not send
@@ -14,7 +14,7 @@ Change-Id: Ib7373d32777f6c42ee488972a7aa63ae8e1cd09b
  1 file changed, 19 insertions(+)
 
 diff --git a/src/java/com/android/internal/telephony/PhoneBase.java b/src/java/com/android/internal/telephony/PhoneBase.java
-index bfccd9f..a309abe 100644
+index f6ffb49..334bece 100644
 --- a/src/java/com/android/internal/telephony/PhoneBase.java
 +++ b/src/java/com/android/internal/telephony/PhoneBase.java
 @@ -220,6 +220,7 @@ public abstract class PhoneBase extends Handler implements Phone {
@@ -37,7 +37,7 @@ index bfccd9f..a309abe 100644
          mCallRingDelay = SystemProperties.getInt(
                  TelephonyProperties.PROPERTY_CALL_RING_DELAY, 3000);
          Rlog.d(LOG_TAG, "mCallRingDelay=" + mCallRingDelay);
-@@ -1902,6 +1908,18 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -1908,6 +1914,18 @@ public abstract class PhoneBase extends Handler implements Phone {
      public void notifyNewRingingConnectionP(Connection cn) {
          if (!mIsVoiceCapable)
              return;
@@ -56,7 +56,7 @@ index bfccd9f..a309abe 100644
          AsyncResult ar = new AsyncResult(null, cn, null);
          mNewRingingConnectionRegistrants.notifyRegistrants(ar);
      }
-@@ -2334,6 +2352,7 @@ public abstract class PhoneBase extends Handler implements Phone {
+@@ -2340,6 +2358,7 @@ public abstract class PhoneBase extends Handler implements Phone {
          pw.println(" mDnsCheckDisabled=" + mDnsCheckDisabled);
          pw.println(" mDcTracker=" + mDcTracker);
          pw.println(" mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
@@ -65,4 +65,4 @@ index bfccd9f..a309abe 100644
          pw.println(" mCallRingDelay=" + mCallRingDelay);
          pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
 -- 
-1.9.1
+2.3.5

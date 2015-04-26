@@ -1,4 +1,4 @@
-From 7cd091321568a4b24b82ed4d55bb459f8e91ae03 Mon Sep 17 00:00:00 2001
+From cbc8dba1979f3a905dc5b78d58d151ef5ff34dde Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 20 Feb 2015 20:26:52 +0700
 Subject: [PATCH] Telephony: HACK: enable WCDMA only setting
@@ -7,9 +7,9 @@ Samsung stock allows WCDMA only
 
 Change-Id: If552c6439f7b6910422ec5549e54e68da798c82e
 ---
- res/values/strings.xml                           |  8 +++++---
- src/com/android/phone/MobileNetworkSettings.java | 15 +++++++++++++--
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ res/values/strings.xml                           | 8 +++++---
+ src/com/android/phone/MobileNetworkSettings.java | 6 +++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
 index 6aa2eec..f6a82d4 100644
@@ -34,49 +34,32 @@ index 6aa2eec..f6a82d4 100644
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff --git a/src/com/android/phone/MobileNetworkSettings.java b/src/com/android/phone/MobileNetworkSettings.java
-index 4103111..3bda06e 100644
+index 441510d..da770b2 100755
 --- a/src/com/android/phone/MobileNetworkSettings.java
 +++ b/src/com/android/phone/MobileNetworkSettings.java
-@@ -523,6 +523,7 @@ public class MobileNetworkSettings extends PreferenceActivity
-                 switch (buttonNetworkMode) {
-                     case Phone.NT_MODE_WCDMA_PREF:
-                     case Phone.NT_MODE_GSM_ONLY:
-+                    case Phone.NT_MODE_WCDMA_ONLY:
-                     case Phone.NT_MODE_LTE_GSM_WCDMA:
-                     case Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA:
-                     case Phone.NT_MODE_CDMA:
-@@ -901,12 +902,22 @@ public class MobileNetworkSettings extends PreferenceActivity
-     private void UpdateEnabledNetworksValueAndSummary(int NetworkMode) {
-         switch (NetworkMode) {
+@@ -921,7 +921,7 @@ public class MobileNetworkSettings extends PreferenceActivity
              case Phone.NT_MODE_WCDMA_ONLY:
-+                if (!mIsGlobalCdma) {
-+                    mButtonEnabledNetworks.setValue(
-+                            Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
-+                    mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_wcdma_only_choice);
-+                } else {
-+                    mButtonEnabledNetworks.setValue(
-+                            Integer.toString(Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA));
-+                    mButtonEnabledNetworks.setSummary(R.string.network_global);
-+                }
-+                break;
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
+-                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_only);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_wcdma_only_choice);
+                 break;
              case Phone.NT_MODE_GSM_UMTS:
+                 mButtonEnabledNetworks.setValue(
+@@ -931,12 +931,12 @@ public class MobileNetworkSettings extends PreferenceActivity
              case Phone.NT_MODE_WCDMA_PREF:
-                 if (!mIsGlobalCdma) {
-                     mButtonEnabledNetworks.setValue(
-                             Integer.toString(Phone.NT_MODE_WCDMA_PREF));
--                    mButtonEnabledNetworks.setSummary(R.string.network_3G);
-+                    mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_wcdma_preferred_choice);
-                 } else {
-                     mButtonEnabledNetworks.setValue(
-                             Integer.toString(Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA));
-@@ -917,7 +928,7 @@ public class MobileNetworkSettings extends PreferenceActivity
-                 if (!mIsGlobalCdma) {
-                     mButtonEnabledNetworks.setValue(
-                             Integer.toString(Phone.NT_MODE_GSM_ONLY));
--                    mButtonEnabledNetworks.setSummary(R.string.network_2G);
-+                    mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_only_choice);
-                 } else {
-                     mButtonEnabledNetworks.setValue(
-                             Integer.toString(Phone.NT_MODE_LTE_CDMA_EVDO_GSM_WCDMA));
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_WCDMA_PREF));
+-                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_pref);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_wcdma_preferred_choice);
+                 break;
+             case Phone.NT_MODE_GSM_ONLY:
+                 mButtonEnabledNetworks.setValue(
+                         Integer.toString(Phone.NT_MODE_GSM_ONLY));
+-                mButtonEnabledNetworks.setSummary(R.string.network_gsm_only);
++                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_only_choice);
+                 break;
+             case Phone.NT_MODE_LTE_GSM_WCDMA:
+                 mButtonEnabledNetworks.setValue(
 -- 
-1.9.1
+2.3.5

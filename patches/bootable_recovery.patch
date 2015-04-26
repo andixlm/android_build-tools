@@ -1,4 +1,4 @@
-From f59eb3542b98ddd1bbac1f4bbc363bd54848b323 Mon Sep 17 00:00:00 2001
+From be936303368c68a2c6e096c0c56288fdba13779a Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 27 Jan 2015 22:29:39 +0700
 Subject: [PATCH] recovery: uncrypt: fix compatibility with CWM
@@ -28,4 +28,4 @@ index 7fb0989..6bc4f51 100644
          unlink(RECOVERY_COMMAND_FILE_TMP);
      } else {
 -- 
-1.9.1
+2.3.5

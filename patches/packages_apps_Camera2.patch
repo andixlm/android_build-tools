@@ -1,4 +1,4 @@
-From 7b7c319b7171c16556c7a98033b1f53f3bc1de3f Mon Sep 17 00:00:00 2001
+From ead4750e7201f3437e3a9adbebdbd5f6b6594767 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 23 Jan 2015 20:34:16 +0700
 Subject: [PATCH 1/2] Camera: i9082: disable preview after stopping camera
@@ -52,10 +52,10 @@ index a034a1c..f203c12 100644
          mPreviewing = false;
          mSnapshotInProgress = false;
 -- 
-1.9.1
+2.3.5
 
 
-From b40d76b7e8183bbfa88f68891638c686c680dee9 Mon Sep 17 00:00:00 2001
+From 79478cabada02634258b3567b282271fc4e28b92 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 24 Jan 2015 21:59:20 +0700
 Subject: [PATCH 2/2] Camera: i9082: update preview state after starting
@@ -109,4 +109,4 @@ index f203c12..129f39a 100644
              closeCamera();
              throw new RuntimeException("startPreview failed", ex);
 -- 
-1.9.1
+2.3.5
