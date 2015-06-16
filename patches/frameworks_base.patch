@@ -58,7 +58,7 @@ index d461bca..a34a758 100644
 2.3.5
 
 
-From cc384f5009f85e3b11ecb7ace018bacf5f301319 Mon Sep 17 00:00:00 2001
+From 9a0b6efe16eaa2740160306bbde768758f6259d2 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sun, 21 Dec 2014 16:23:31 +0700
 Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
@@ -72,7 +72,7 @@ Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
-index cd5baa8..5002726 100644
+index 8105ff8..b3d2023 100644
 --- a/services/core/java/com/android/server/power/PowerManagerService.java
 +++ b/services/core/java/com/android/server/power/PowerManagerService.java
 @@ -235,6 +235,7 @@ public final class PowerManagerService extends SystemService
@@ -95,14 +95,14 @@ index cd5baa8..5002726 100644
                  if (eventTime > mLastUserActivityTime) {
                      mLastUserActivityTime = eventTime;
                      mDirty |= DIRTY_USER_ACTIVITY;
-@@ -1644,7 +1650,7 @@ public final class PowerManagerService extends SystemService
-                         }
- 
-                         mKeyboardLight.setBrightness(mKeyboardVisible ? keyboardBrightness : 0);
--                        if (mButtonTimeout != 0 && now > mLastUserActivityTime + mButtonTimeout) {
-+                        if (mButtonTimeout != 0 && now > mLastButtonActivityTime + mButtonTimeout) {
-                              mButtonsLight.setBrightness(0);
-                         } else {
-                             mButtonsLight.setBrightness(buttonBrightness);
+@@ -1648,7 +1654,7 @@ public final class PowerManagerService extends SystemService
+                             mKeyboardLight.setBrightness(mKeyboardVisible ?
+                                     keyboardBrightness : 0);
+                             if (mButtonTimeout != 0
+-                                    && now > mLastUserActivityTime + mButtonTimeout) {
++                                    && now > mLastButtonActivityTime + mButtonTimeout) {
+                                 mButtonsLight.setBrightness(0);
+                             } else {
+                                 if (!mProximityPositive) {
 -- 
-2.3.5
+1.9.1
