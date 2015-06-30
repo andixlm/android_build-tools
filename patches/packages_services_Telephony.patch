@@ -34,7 +34,7 @@ index 6aa2eec..f6a82d4 100644
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff --git a/src/com/android/phone/MobileNetworkSettings.java b/src/com/android/phone/MobileNetworkSettings.java
-index 441510d..da770b2 100755
+index 441510d..da770b2 100644
 --- a/src/com/android/phone/MobileNetworkSettings.java
 +++ b/src/com/android/phone/MobileNetworkSettings.java
 @@ -921,7 +921,7 @@ public class MobileNetworkSettings extends PreferenceActivity
