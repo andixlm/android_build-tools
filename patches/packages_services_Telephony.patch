@@ -1,4 +1,4 @@
-From cbc8dba1979f3a905dc5b78d58d151ef5ff34dde Mon Sep 17 00:00:00 2001
+From d80082dc96fd257f1ca9bfd40884769b76270bab Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Fri, 20 Feb 2015 20:26:52 +0700
 Subject: [PATCH] Telephony: HACK: enable WCDMA only setting
@@ -34,32 +34,23 @@ index 6aa2eec..f6a82d4 100644
  
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff --git a/src/com/android/phone/MobileNetworkSettings.java b/src/com/android/phone/MobileNetworkSettings.java
-index 441510d..da770b2 100644
+index 6dbd608..253ea80 100644
 --- a/src/com/android/phone/MobileNetworkSettings.java
 +++ b/src/com/android/phone/MobileNetworkSettings.java
-@@ -921,7 +921,7 @@ public class MobileNetworkSettings extends PreferenceActivity
-             case Phone.NT_MODE_WCDMA_ONLY:
-                 mButtonEnabledNetworks.setValue(
-                         Integer.toString(Phone.NT_MODE_WCDMA_ONLY));
--                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_only);
-+                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_wcdma_only_choice);
-                 break;
-             case Phone.NT_MODE_GSM_UMTS:
-                 mButtonEnabledNetworks.setValue(
-@@ -931,12 +931,12 @@ public class MobileNetworkSettings extends PreferenceActivity
-             case Phone.NT_MODE_WCDMA_PREF:
-                 mButtonEnabledNetworks.setValue(
-                         Integer.toString(Phone.NT_MODE_WCDMA_PREF));
--                mButtonEnabledNetworks.setSummary(R.string.network_wcdma_pref);
-+                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_wcdma_preferred_choice);
-                 break;
-             case Phone.NT_MODE_GSM_ONLY:
-                 mButtonEnabledNetworks.setValue(
-                         Integer.toString(Phone.NT_MODE_GSM_ONLY));
--                mButtonEnabledNetworks.setSummary(R.string.network_gsm_only);
-+                mButtonEnabledNetworks.setSummary(R.string.preferred_network_mode_gsm_only_choice);
-                 break;
-             case Phone.NT_MODE_LTE_GSM_WCDMA:
-                 mButtonEnabledNetworks.setValue(
+@@ -512,11 +512,11 @@ public class MobileNetworkSettings extends PreferenceActivity
+ 
+         mEnabledNetworksSummaries = new SparseIntArray();
+         mEnabledNetworksSummaries.append(Phone.NT_MODE_WCDMA_PREF,
+-                R.string.network_wcdma_pref);
++                R.string.preferred_network_mode_gsm_wcdma_preferred_choice);
+         mEnabledNetworksSummaries.append(Phone.NT_MODE_GSM_ONLY,
+-                R.string.network_gsm_only);
++                R.string.preferred_network_mode_gsm_only_choice);
+         mEnabledNetworksSummaries.append(Phone.NT_MODE_WCDMA_ONLY,
+-                R.string.network_wcdma_only);
++                R.string.preferred_network_mode_wcdma_only_choice);
+         mEnabledNetworksSummaries.append(Phone.NT_MODE_GSM_UMTS,
+                R.string.network_gsm_umts);
+         mEnabledNetworksSummaries.append(Phone.NT_MODE_CDMA,
 -- 
-2.3.5
+1.9.1
