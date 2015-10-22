@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Get start time
-start_time=$(date +"%s")
-
 cd ..
 
 export USE_CCACHE=1
@@ -138,17 +135,3 @@ if [[ !($FAST) ]]; then
 
 	build_rom
 fi
-
-# Calculate elapsed time
-end_time=$(date +"%s")
-tdiff=$(($end_time-$start_time))
-hours=$(($tdiff / 3600 ))
-mins=$((($tdiff % 3600) / 60))
-secs=$(($tdiff % 60))
-
-# Print elapsed time
-tput setaf 2
-echo ""
-printf "Elapsed time: %02g:%02g:%02g" $hours $mins $secs
-echo ""
-tput sgr0
