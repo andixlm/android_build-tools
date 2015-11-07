@@ -5,8 +5,6 @@ Subject: [PATCH 1/2] Revert "DynamicGrid: tuning the icon size for some
  device"
 
 This reverts commit edbea0af1226978b06d7f877ae435797d31419af.
-
-Change-Id: Ib97c3cf75e8ed354fce9471cb32ce33fe688ff2b
 ---
  src/com/android/launcher3/DynamicGrid.java | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
@@ -34,9 +32,8 @@ index 6e889de..2355c95 100644
                  R.xml.default_workspace_5x5));
          // The tablet profile is odd in that the landscape orientation
          // also includes the nav bar on the side
--- 
+--
 1.9.1
-
 
 From b62f7265304b3d7db53b2a985c11840a1172936b Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
@@ -44,8 +41,6 @@ Date: Sat, 3 Oct 2015 13:43:40 +0700
 Subject: [PATCH 2/2] Revert "Update Larger icons setting for better usability"
 
 This reverts commit 5c7529006f3ed78d934fed2861cebd3654695108.
-
-Change-Id: I4ecf4ef9adc347fc16c98419262bf34bc11f7090
 ---
  src/com/android/launcher3/DynamicGrid.java | 38 +++++++++++++++---------------
  1 file changed, 19 insertions(+), 19 deletions(-)
@@ -56,12 +51,12 @@ index 2355c95..dff2b6d 100644
 +++ b/src/com/android/launcher3/DynamicGrid.java
 @@ -34,7 +34,7 @@ public class DynamicGrid {
      private float mMinHeight;
- 
+
      // This is a static that we use for the default icon size on a 4/5-inch phone
 -    static float DEFAULT_ICON_SIZE_DP = 66;
 +    static float DEFAULT_ICON_SIZE_DP = 60;
      static float DEFAULT_ICON_SIZE_PX = 0;
- 
+
      public static float dpiFromPx(int size, DisplayMetrics metrics){
 @@ -67,40 +67,40 @@ public class DynamicGrid {
          DEFAULT_ICON_SIZE_PX = pxFromDp(DEFAULT_ICON_SIZE_DP, dm);
@@ -122,5 +117,5 @@ index 2355c95..dff2b6d 100644
                  fourByFourDefaultLayout));
          mMinWidth = dpiFromPx(minWidthPx, dm);
          mMinHeight = dpiFromPx(minHeightPx, dm);
--- 
+--
 1.9.1

@@ -6,8 +6,6 @@ Subject: [PATCH 1/2] Camera: i9082: disable preview after stopping camera
 This fixes a native crash from Broadcom's driver. However, there is
 an unwanted side effect of the preview going black while the
 'close application' animation is running.
-
-Change-Id: I231233d28a1f7ac914408a7d02100a9424c2bf1c
 ---
  src/com/android/camera/CameraActivity.java | 2 +-
  src/com/android/camera/PhotoModule.java    | 1 +
@@ -21,7 +19,7 @@ index f96d634..820ce24 100644
 @@ -1643,7 +1643,7 @@ public class CameraActivity extends QuickActivity
          mCurrentModule.onPreviewVisibilityChanged(visibility);
      }
- 
+
 -    private void updatePreviewRendering(int visibility) {
 +    /* private */ void updatePreviewRendering(int visibility) {
          if (visibility == ModuleController.VISIBILITY_HIDDEN) {
@@ -51,9 +49,8 @@ index a034a1c..f203c12 100644
          mCameraDevice = null;
          mPreviewing = false;
          mSnapshotInProgress = false;
--- 
+--
 2.3.5
-
 
 From 79478cabada02634258b3567b282271fc4e28b92 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
@@ -63,8 +60,6 @@ Subject: [PATCH 2/2] Camera: i9082: update preview state after starting
 
 Fixes a regression in I231233d28a1f7ac914408a7d02100a9424c2bf1c
 where preview freezes after switching between front and back cams
-
-Change-Id: I036539aa602d738372f421499cf5ac8c646523ed
 ---
  src/com/android/camera/CameraActivity.java | 2 +-
  src/com/android/camera/PhotoModule.java    | 1 +
@@ -94,7 +89,7 @@ index 52b8858..8e3f2e6 100644
          }
 +        mActivity.updatePreviewVisibility();
      }
- 
+
      @Override
 diff --git a/src/com/android/camera/VideoModule.java b/src/com/android/camera/VideoModule.java
 index f203c12..129f39a 100644
@@ -108,5 +103,5 @@ index f203c12..129f39a 100644
          } catch (Throwable ex) {
              closeCamera();
              throw new RuntimeException("startPreview failed", ex);
--- 
+--
 2.3.5

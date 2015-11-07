@@ -7,8 +7,6 @@ Subject: [PATCH] telephony: support for RIL that does not send
 Samsung Broadcom RIL does not send UNSOL_CALL_RING at all, so it
 needs to be faked or non loop (e.g. Digital Phone) ringtones
 won't work.
-
-Change-Id: Ib7373d32777f6c42ee488972a7aa63ae8e1cd09b
 ---
  .../com/android/internal/telephony/PhoneBase.java     | 19 +++++++++++++++++++
  1 file changed, 19 insertions(+)
@@ -28,7 +26,7 @@ index f6ffb49..334bece 100644
 @@ -441,6 +442,11 @@ public abstract class PhoneBase extends Handler implements Phone {
                  TelephonyProperties.PROPERTY_RIL_SENDS_MULTIPLE_CALL_RING, true);
          Rlog.d(LOG_TAG, "mDoesRilSendMultipleCallRing=" + mDoesRilSendMultipleCallRing);
- 
+
 +        // Some RIL do not even send a single RIL_UNSOL_CALL_RING
 +        mDoesRilSendCallRing = SystemProperties.getBoolean(
 +                "ro.telephony.call_ring", true);
@@ -64,5 +62,5 @@ index f6ffb49..334bece 100644
          pw.println(" mCallRingContinueToken=" + mCallRingContinueToken);
          pw.println(" mCallRingDelay=" + mCallRingDelay);
          pw.println(" mIsTheCurrentActivePhone=" + mIsTheCurrentActivePhone);
--- 
+--
 2.3.5

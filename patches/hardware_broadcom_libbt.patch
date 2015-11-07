@@ -3,8 +3,6 @@ From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Tue, 10 Dec 2013 20:09:12 +0700
 Subject: [PATCH] libbt: switch to N_BRCM_HCI line disclipline for userial
  ioctl
-
-Change-Id: I12c297c6b26fc0cb6f0a36ed8f5d04d4d36a4092
 ---
  src/userial_vendor.c | 11 +++++++++++
  1 file changed, 11 insertions(+)
@@ -16,17 +14,17 @@ index 949ec4b..be8cd0b 100644
 @@ -196,6 +196,10 @@ int userial_vendor_open(tUSERIAL_CFG *p_cfg)
      uint16_t parity;
      uint8_t stop_bits;
- 
+
 +#if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
 +    int ldisc;
 +#endif
 +
      vnd_userial.fd = -1;
- 
+
      if (!userial_to_tcio_baud(p_cfg->baud, &baud))
 @@ -265,6 +269,13 @@ int userial_vendor_open(tUSERIAL_CFG *p_cfg)
      tcsetattr(vnd_userial.fd, TCSANOW, &vnd_userial.termios);
- 
+
  #if (BT_WAKE_VIA_USERIAL_IOCTL==TRUE)
 +    // TODO: check for breakage on tuna (Galaxy Nexus). It defines this,
 +    //       but does not contain the kernel code to support it.
@@ -37,6 +35,6 @@ index 949ec4b..be8cd0b 100644
 +
      userial_ioctl_init_bt_wake(vnd_userial.fd);
  #endif
- 
--- 
+
+--
 2.3.5

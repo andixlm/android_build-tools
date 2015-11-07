@@ -7,8 +7,6 @@ CTS 5.0 requires the presence of an auto mode, so applications
 may try to use auto without checking.
 
 Also change ENODEV to MAX_CAMERAS_IN_USE to please the CTS
-
-Change-Id: I929feffa4f79c69e9d7be7d1acacb3c228280bfe
 ---
  core/java/android/hardware/camera2/legacy/LegacyMetadataMapper.java | 2 +-
  core/java/android/hardware/camera2/legacy/LegacyRequestMapper.java  | 2 +-
@@ -54,7 +52,7 @@ index d461bca..a34a758 100644
              case EOPNOTSUPP:
                  throw new CameraRuntimeException(CAMERA_DEPRECATED_HAL);
              case INVALID_OPERATION:
--- 
+--
 2.3.5
 
 
@@ -65,8 +63,6 @@ Subject: [PATCH 2/2] PowerManagerService: only turn on button light when any
  button is pressed
 
 This more closely emulates stock Samsung behavior
-
-Change-Id: I6b15c45b713bcbc290a1026805c46109060f9990
 ---
  .../core/java/com/android/server/power/PowerManagerService.java   | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
@@ -80,7 +76,7 @@ index 8105ff8..b3d2023 100644
      private long mLastUserActivityTime;
      private long mLastUserActivityTimeNoChangeLights;
 +    private long mLastButtonActivityTime;
- 
+
      // Timestamp of last interactive power hint.
      private long mLastInteractivePowerHintTime;
 @@ -1145,6 +1146,11 @@ public final class PowerManagerService extends SystemService
@@ -104,5 +100,5 @@ index 8105ff8..b3d2023 100644
                                  mButtonsLight.setBrightness(0);
                              } else {
                                  if (!mProximityPositive) {
--- 
+--
 1.9.1

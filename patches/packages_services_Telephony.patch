@@ -4,8 +4,6 @@ Date: Fri, 20 Feb 2015 20:26:52 +0700
 Subject: [PATCH] Telephony: HACK: enable WCDMA only setting
 
 Samsung stock allows WCDMA only
-
-Change-Id: If552c6439f7b6910422ec5549e54e68da798c82e
 ---
  res/values/strings.xml                           | 8 +++++---
  src/com/android/phone/MobileNetworkSettings.java | 6 +++---
@@ -17,7 +15,7 @@ index 6aa2eec..f6a82d4 100644
 +++ b/res/values/strings.xml
 @@ -609,12 +609,14 @@
      </string-array>
- 
+
      <string-array name="enabled_networks_except_lte_choices" translatable="false">
 -        <item>@string/network_3G</item>
 -        <item>@string/network_2G</item>
@@ -31,14 +29,14 @@ index 6aa2eec..f6a82d4 100644
          <item>"1"</item>
 +        <item>"0"</item>
      </string-array>
- 
+
      <string-array name="enabled_networks_except_gsm_lte_choices" translatable="false">
 diff --git a/src/com/android/phone/MobileNetworkSettings.java b/src/com/android/phone/MobileNetworkSettings.java
 index 6dbd608..253ea80 100644
 --- a/src/com/android/phone/MobileNetworkSettings.java
 +++ b/src/com/android/phone/MobileNetworkSettings.java
 @@ -512,11 +512,11 @@ public class MobileNetworkSettings extends PreferenceActivity
- 
+
          mEnabledNetworksSummaries = new SparseIntArray();
          mEnabledNetworksSummaries.append(Phone.NT_MODE_WCDMA_PREF,
 -                R.string.network_wcdma_pref);
@@ -52,5 +50,5 @@ index 6dbd608..253ea80 100644
          mEnabledNetworksSummaries.append(Phone.NT_MODE_GSM_UMTS,
                 R.string.network_gsm_umts);
          mEnabledNetworksSummaries.append(Phone.NT_MODE_CDMA,
--- 
+--
 1.9.1

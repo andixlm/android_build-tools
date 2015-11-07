@@ -2,8 +2,6 @@ From c07a631002e9bdb7d6d7895ab0a94a20f5f2163d Mon Sep 17 00:00:00 2001
 From: andixlm <andixev@gmail.com>
 Date: Sat, 26 Sep 2015 21:01:55 +0500
 Subject: [PATCH] Remove CMUpdater package
-
-Change-Id: Iaf095c32422ddef29025d5cedf9eaf71f9c546c0
 ---
  config/common.mk | 1 -
  1 file changed, 1 deletion(-)
@@ -20,5 +18,5 @@ index d22c935..2bab035 100644
      CMAccount \
      CMHome \
      CyanogenSetupWizard \
--- 
+--
 2.1.4

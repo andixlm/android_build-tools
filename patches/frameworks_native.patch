@@ -4,8 +4,6 @@ Date: Thu, 14 Nov 2013 15:19:46 +0700
 Subject: [PATCH 1/5] binder: add compat symbol
 
 Required for older Samsung libtvout
-
-Change-Id: Ib18d2513570382432d49f302ab041230650372f2
 ---
  libs/binder/IPCThreadState.cpp | 4 ++++
  1 file changed, 4 insertions(+)
@@ -17,7 +15,7 @@ index dd04dcf..9ec2380 100644
 @@ -361,6 +361,10 @@ status_t IPCThreadState::clearLastError()
      return err;
  }
- 
+
 +extern "C" int _ZN7android14IPCThreadState13getCallingPidEv(IPCThreadState *state) {
 +    return state->getCallingPid();
 +}
@@ -25,9 +23,8 @@ index dd04dcf..9ec2380 100644
  int IPCThreadState::getCallingPid() const
  {
      return mCallingPid;
--- 
+--
 2.3.5
-
 
 From 52672bcc7b8a858a35e3084be95417d872068285 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
@@ -35,8 +32,6 @@ Date: Tue, 10 Dec 2013 19:38:17 +0700
 Subject: [PATCH 2/5] binder: add compat symbols
 
 Required for libtvservice_binder.so on I9082
-
-Change-Id: I059e92f19e4c5a911d38faa9c4df549c75c90761
 ---
  libs/binder/Parcel.cpp | 12 ++++++++++++
  1 file changed, 12 insertions(+)
@@ -48,7 +43,7 @@ index e7589b1..b34ceb9 100644
 @@ -873,6 +873,12 @@ status_t Parcel::writeBlob(size_t len, WritableBlob* outBlob)
      return status;
  }
- 
+
 +extern "C" status_t _ZN7android6Parcel5writeERKNS0_26FlattenableHelperInterfaceE(void *parcel, void *val);
 +
 +extern "C" status_t _ZN7android6Parcel5writeERKNS_11FlattenableE(void *parcel, void *val) {
@@ -61,7 +56,7 @@ index e7589b1..b34ceb9 100644
 @@ -1285,6 +1291,12 @@ status_t Parcel::readBlob(size_t len, ReadableBlob* outBlob) const
      return NO_ERROR;
  }
- 
+
 +extern "C" status_t _ZNK7android6Parcel4readERNS0_26FlattenableHelperInterfaceE(void *parcel, void *val);
 +
 +extern "C" status_t _ZNK7android6Parcel4readERNS_11FlattenableE(void *parcel, void *val) {
@@ -71,15 +66,13 @@ index e7589b1..b34ceb9 100644
  status_t Parcel::read(FlattenableHelperInterface& val) const
  {
      // size
--- 
+--
 2.3.5
-
 
 From 1ee90ff836265e70b8dc0357e86e18502ea46230 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Mon, 16 Dec 2013 15:45:42 +0700
 Subject: [PATCH 3/5] sf: CAPRI_HWC: fix rotation artifact
-
 ---
  services/surfaceflinger/SurfaceFlinger.cpp | 5 +++++
  1 file changed, 5 insertions(+)
@@ -91,7 +84,7 @@ index dfe5754..c608397 100644
 @@ -3749,6 +3749,11 @@ status_t SurfaceFlinger::captureScreenImplLocked(
  {
      ATRACE_CALL();
- 
+
 +// Rotation artifact problems when useReadPixels is false
 +#ifdef CAPRI_HWC
 +    useReadPixels = true;
@@ -100,9 +93,8 @@ index dfe5754..c608397 100644
      // get screen geometry
      const uint32_t hw_w = hw->getWidth();
      const uint32_t hw_h = hw->getHeight();
--- 
+--
 2.3.5
-
 
 From e6e115f462283ac2fc6a581728a5d35412d1eb21 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
@@ -111,8 +103,6 @@ Subject: [PATCH 4/5] SurfaceComposerClient: don't block RGBA_8888 for
  screenshot on CAPRI_HWC
 
 Works here and required for ColorFade animation
-
-Change-Id: Ie7d549bb63e11380d7efcab27b7e4d9f3eb2a1fe
 ---
  libs/gui/SurfaceComposerClient.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -130,16 +120,13 @@ index b6025f2..9c59ba2 100644
      int format = 0;
      producer->query(NATIVE_WINDOW_FORMAT,&format);
      if (format == PIXEL_FORMAT_RGBA_8888) {
--- 
+--
 2.3.5
-
 
 From 395931556400205a102f9db5eec1e07088017821 Mon Sep 17 00:00:00 2001
 From: Pawit Pornkitprasan <p.pawit@gmail.com>
 Date: Sat, 20 Dec 2014 19:09:27 +0700
 Subject: [PATCH 5/5] sf: CAPRI_HWC: fix for screen recording
-
-Change-Id: I6c7e59400eab86bc5ec0ffebbcc475fa0fa404d2
 ---
  libs/gui/BufferQueueProducer.cpp | 5 +++++
  1 file changed, 5 insertions(+)
@@ -161,5 +148,5 @@ index 6f76019..ff6a570 100644
              if (newUndequeuedCount < minUndequeuedCount) {
                  BQ_LOGE("%s: min undequeued buffer count (%d) exceeded "
                          "(dequeued=%d undequeued=%d)",
--- 
+--
 2.3.5
