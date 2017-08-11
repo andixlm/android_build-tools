@@ -1,26 +1,13 @@
 #!/bin/bash
 
-cd ..
+cd ./..
+ROOT_DIR=$(pwd)
 
-# Use -o for resetting changes only.
-case "$1" in
-	"-o" )
-		RO=1
-		;;
-	"" )
-		;;
-	* )
-		echo Unknown option: $1
-		exit 0
-		;;
-esac
+echo -n 'Clearing... '
+repo forall -c "git reset --hard && git clean -fdx" > /dev/null && echo 'done'
 
-# Reset changes
-repo forall -c 'git reset --hard ; git clean -fdx'
-
-# Sync sources
-if [[ -n $RO ]]; then
-	exit 0
-else
-	repo sync -f
+if [ "$1" == "-s" ]; then
+    echo -n 'Syncing... '
+	repo sync > /dev/null && echo 'done'
 fi
+
