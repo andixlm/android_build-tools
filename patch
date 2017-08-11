@@ -1,22 +1,24 @@
 #!/bin/bash
 
-cd ..
+cd ./..
+ROOT_DIR=$(pwd)
+BUILD_TOOLS_DIR=$ROOT_DIR/build_tools
+PATCHES_DIR=$BUILD_TOOLS_DIR/patches
 
-COUNT=0
-CURRENT_DIR="$PWD"
-PD="build-tools/patches"
-PATCHES=()
+echo -n 'Patching... '
 
-while [ "x${PATCHES[COUNT]}" != "x" ]
+for diff_file in $(ls $PATCHES_DIR | grep -E ".*.(diff|patch)$")
 do
-	CURRENT="${PATCHES[COUNT]}"
-	FOLDER=`echo "$CURRENT" | awk '{print $1}'`
-	PATCH=`echo "$CURRENT" | awk '{print $2}'`
-
-	cd "$FOLDER"
-	echo Patching "$FOLDER" ...
-	git apply "$CURRENT_DIR/$PD/$PATCH"
-	cd "$CURRENT_DIR"
-
-	COUNT=$(($COUNT + 1))
+	cd $ROOT_DIR/$(echo $diff_file | sed -E 's/_/\//g; s/.(diff|patch)//')
+	
+	if [ "$1" == "-c" ]; then
+        git reset --hard > /dev/null
+	fi
+	
+	git apply $PATCHES_DIR/$diff_file || exit -1
 done
+
+cd $BUILD_TOOLS_DIR
+
+echo 'done'
+
